@@ -3,6 +3,7 @@ package com.randrdevelopment;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -19,13 +20,17 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.randrdevelopment.regions.SchematicTools;
+import com.sk89q.worldedit.Vector;
 
 public class PropertyGroupCommands implements CommandExecutor {
 	
 private PropertyGroup plugin;
+    final FileConfiguration config = YamlConfiguration.loadConfiguration(DirectoryStructure.getCfgProperties());
 
 	public PropertyGroupCommands(PropertyGroup plugin) {
 		this.plugin = plugin;
@@ -35,7 +40,7 @@ private PropertyGroup plugin;
         Tag tag = items.get(key);
         return tag;
     }
-	
+    
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player player = (Player)sender;
@@ -51,7 +56,7 @@ private PropertyGroup plugin;
 						//"[PropertyGroup] you must type a command, type /Property Hel"
 						//"----------========= Property Groups 1.0 =========----------"
 						sender.sendMessage(ChatColor.GREEN+"--------========= Property Groups 1.0 =========--------");
-						sender.sendMessage(ChatColor.AQUA+"Create "+ChatColor.DARK_AQUA+"<Group>"+ChatColor.AQUA+": Create Property Group");
+						sender.sendMessage(ChatColor.AQUA+"Create "+ChatColor.DARK_AQUA+"<Group> <Rows> <Cols>"+ChatColor.AQUA+": Create Property Group");
 						sender.sendMessage(ChatColor.AQUA+"Set: Setup Commands");
 						sender.sendMessage(ChatColor.AQUA+"ListGroups: List all Property Groups");
 						sender.sendMessage(ChatColor.AQUA+"List "+ChatColor.DARK_AQUA+"<Group>"+ChatColor.AQUA+": List all properties in group");
@@ -71,6 +76,10 @@ private PropertyGroup plugin;
 						}
 					}else if(args[0].equalsIgnoreCase("listgroups")){
 						// TODO: List all the groups
+						sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA+"Property Groups:");
+		                for (String s : config.getKeys(false)) {
+		                	sender.sendMessage(ChatColor.AQUA+s);
+		                }
 					}else if(args[0].equalsIgnoreCase("deletegroup")){
 						// TODO: Delete Group
 					}else if(args[0].equalsIgnoreCase("delete")){
@@ -81,6 +90,13 @@ private PropertyGroup plugin;
 						// TODO: Handle Teleport
 					}else if(args[0].equalsIgnoreCase("create")){
 						// TODO: Create Property Group...
+						if (config.getConfigurationSection(args[1]) != null)
+						{
+							sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.RED+args[1]+" Already Exists");
+							return true;
+						}
+						Integer Rows = Integer.parseInt(args[2]);
+						Integer Cols = Integer.parseInt(args[3]);
 						String filename;
 						try {
 				            File f = new File("schematics/"+args[1]+".schematic");
@@ -109,23 +125,45 @@ private PropertyGroup plugin;
 				            short width = (Short)getChildTag(tagCollection, "Width", ShortTag.class).getValue();
 				            short length = (Short) getChildTag(tagCollection, "Length", ShortTag.class).getValue();
 
-				            byte[] blocks = (byte[]) getChildTag(tagCollection, "Blocks", ByteArrayTag.class).getValue();
-				            byte[] data = (byte[]) getChildTag(tagCollection, "Data", ByteArrayTag.class).getValue();
-
-				            List entities = (List) getChildTag(tagCollection, "Entities", ListTag.class).getValue();
-				            List tileentities = (List) getChildTag(tagCollection, "TileEntities", ListTag.class).getValue();
-
 				            nbt.close();
 				            fis.close();
+     				            
+				            // Save to configuration file...
+				            config.createSection(args[1]);
+				            config.set(args[1]+".width", width);
+				            config.set(args[1]+".length", length);
+				            config.set(args[1]+".rows", Rows);
+				            config.set(args[1]+".cols", Cols);
+				            config.save(DirectoryStructure.getCfgProperties());
 				            
-				            
-				            
-				            sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA+"New Property Group Created "+args[1]);
-							sender.sendMessage(ChatColor.AQUA+"Width="+width+" Length="+length);
+				            sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA+"New Property Group Created: "+args[1]);
+							sender.sendMessage(ChatColor.AQUA+"Width="+width+" Length="+length+" Rows="+Rows+" Cols="+Cols);
 
 				        } catch (Exception e) {
 				            e.printStackTrace();
 				        }
+					}else if(args[0].equalsIgnoreCase("set")){
+						if (args[1] != "")
+						{
+							if (args[2].equalsIgnoreCase("startpoint")){
+								// Set Start Point...
+								Location pos = player.getLocation();
+								double PosX = pos.getX();
+								double PosY = pos.getY();
+								double PosZ = pos.getZ();
+								
+								config.set(args[1]+".startlocation.x", PosX);
+								config.set(args[1]+".startlocation.y", PosY);
+								config.set(args[1]+".startlocation.z", PosZ);
+								try {
+									config.save(DirectoryStructure.getCfgProperties());
+									sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA+"Start Position Saved");
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}
 					}else if(args[0].equalsIgnoreCase("test")){
 						SchematicTools.reload(player, args[1]);
 					}else{

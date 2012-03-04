@@ -59,7 +59,9 @@ public class SchematicTools {
 		try {
 			editSession.enableQueue();
 			localSession.setClipboard(CuboidClipboard.loadSchematic(saveFile));
-			Vector pos = localSession.getClipboard().getOrigin();
+			//Vector pos = localSession.getClipboard().getOrigin();
+			Vector pos = localPlayer.getPosition();
+			
 			localSession.getClipboard().place(editSession, pos, false);
 			editSession.flushQueue();
 			we.flushBlockBag(localPlayer, editSession);
@@ -85,5 +87,9 @@ public class SchematicTools {
 			//PropertyGroupLogger.log(Level.WARNING, e.getMessage());
 		}
 		return restored;
+	}
+	
+	public void undo() {
+		editSession.undo(editSession);
 	}
 }

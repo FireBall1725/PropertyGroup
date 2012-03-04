@@ -14,8 +14,9 @@ public class DirectoryStructure {
 	private static File pluginDir = new File("plugins", "PropertyGroup"); //$NON-NLS-1$ //$NON-NLS-2$
 	private static File schematicsDir;
 	private static final String schematicsFoldername = "schematics"; //$NON-NLS-1$
-	private static File persistFile;
+	private static File persistFile, cfgProperties;
 	private static final String persistFilename = "persist.yml"; //$NON-NLS-1$
+	private static final String configProperties = "propertygroups.yml";
 	
 	public static void setup() {
 		pluginDir = PropertyGroup.getInstance().getDataFolder();
@@ -35,16 +36,18 @@ public class DirectoryStructure {
 	public static File getPersistFile() {
 		return persistFile;
 	}
+	
+	public static File getCfgProperties() {
+		return cfgProperties;
+	}
 
 	private static void setupDirectoryStructure() {
-		// directories
 		schematicsDir = new File(schematicsFoldername);
 
-		// files
 		persistFile = new File(pluginDir, persistFilename);
+		cfgProperties = new File(pluginDir, configProperties);
 
-		// schematics
-		//createDir(schematicsDir);
+		createDir(pluginDir);
 	}
 	
 	public static File getJarFile() {
