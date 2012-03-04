@@ -17,6 +17,7 @@ import org.jnbt.Tag;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -134,6 +135,26 @@ private PropertyGroup plugin;
 				            config.set(args[1]+".length", length);
 				            config.set(args[1]+".rows", Rows);
 				            config.set(args[1]+".cols", Cols);
+				            config.set(args[1]+".qty", Rows * Cols);
+				            
+				            // Save default options to configuration file...
+				            config.set(args[1]+".userteleport", false);
+				            config.set(args[1]+".propertyspacing", 6);
+				            config.set(args[1]+".createregion", false);
+				            config.set(args[1]+".assignhome", false);
+				            
+				            // Create Properties
+				            int i = 1;
+				            for(int r=1; r<=Rows; r++){
+				                for(int c=1; c<=Cols; c++){
+				                	config.set(args[1]+".properties."+i+".created", false);
+				                	config.set(args[1]+".properties."+i+".row", r);
+				                	config.set(args[1]+".properties."+i+".col", c);
+				                	i++;
+				                }
+				            }
+				            
+				            // Save Configuration
 				            config.save(DirectoryStructure.getCfgProperties());
 				            
 				            sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA+"New Property Group Created: "+args[1]);
@@ -145,27 +166,61 @@ private PropertyGroup plugin;
 					}else if(args[0].equalsIgnoreCase("set")){
 						if (args[1] != "")
 						{
-							if (args[2].equalsIgnoreCase("startpoint")){
-								// Set Start Point...
-								Location pos = player.getLocation();
-								double PosX = pos.getX();
-								double PosY = pos.getY();
-								double PosZ = pos.getZ();
+							// Lets make sure the property group exists
+							if (config.getConfigurationSection(args[1]) != null)
+							{
+								if (args[2].equalsIgnoreCase("startpoint")){
+									// Set Start Point...
+									Location pos = player.getLocation();
+									int PosX = (int)pos.getX();
+									int PosY = (int)pos.getY();
+									int PosZ = (int)pos.getZ();
 								
-								config.set(args[1]+".startlocation.x", PosX);
-								config.set(args[1]+".startlocation.y", PosY);
-								config.set(args[1]+".startlocation.z", PosZ);
-								try {
-									config.save(DirectoryStructure.getCfgProperties());
-									sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA+"Start Position Saved");
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+									World world = player.getWorld();
+									String worldName = world.getName();
+									
+									config.set(args[1]+".startlocation.x", PosX);
+									config.set(args[1]+".startlocation.y", PosY);
+									config.set(args[1]+".startlocation.z", PosZ);
+									config.set(args[1]+".startlocation.world", worldName);
+									
+									try {
+										config.save(DirectoryStructure.getCfgProperties());
+										sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA+"Start Position Saved");
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
 								}
+							} else {
+								sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.RED+"Property Group Does Not Exist...");
 							}
 						}
 					}else if(args[0].equalsIgnoreCase("test")){
-						SchematicTools.reload(player, args[1]);
+						// Lets get the row and column of the next free property..
+						int qty = config.getInt(args[1]+".qty");
+						
+						for(int i=1; i<=qty; i++){
+							if (config.getBoolean(args[1]+".properties."+i+".created") == false){
+								// Found an empty spot..
+								int x = config.getInt(args[1]+".startlocation.x");
+								int y = config.getInt(args[1]+".startlocation.y");
+								int z = config.getInt(args[1]+".startlocation.z");
+								String worldname = config.getString(args[1]+".startlocation.world");
+								int width = config.getInt(args[1]+".width");
+								int length = config.getInt(args[1]+".length");
+								int spacing = config.getInt(args[1]+".propertyspacing");
+								int row = config.getInt(args[1]+".properties."+i+".row");
+								int col = config.getInt(args[1]+".properties."+i+".col");
+								
+								x = ((width + spacing) * row) + x;
+								z = ((length + spacing) * col) + z;
+								
+								SchematicTools.reload(args[1], worldname, x, y, z);
+							}
+						}
+						
+						//SchematicTools.reload(args[1]);
 					}else{
 						sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.RED+"you must type a command...");
 						sender.sendMessage(ChatColor.RED+"Type /Property Help for more info...");
