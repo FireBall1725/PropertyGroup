@@ -7,5 +7,7 @@
 			<attribute name="javadoc_location" value="http://jd.bukkit.org/apidocs/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/Users/tylerreed/Dropbox/Java/api/worldedit-5.3.jar"/>
+	<classpathentry kind="lib" path="/Users/tylerreed/Dropbox/Java/api/WorldGuard.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
