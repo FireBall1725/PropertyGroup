@@ -21,11 +21,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.randrdevelopment.regions.SchematicTools;
+
 public class PropertyGroupCommands implements CommandExecutor {
 	
-private PropertyGroupMain plugin;
+private PropertyGroup plugin;
 
-	public PropertyGroupCommands(PropertyGroupMain plugin) {
+	public PropertyGroupCommands(PropertyGroup plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -107,14 +109,25 @@ private PropertyGroupMain plugin;
 				            short width = (Short)getChildTag(tagCollection, "Width", ShortTag.class).getValue();
 				            short length = (Short) getChildTag(tagCollection, "Length", ShortTag.class).getValue();
 
+				            byte[] blocks = (byte[]) getChildTag(tagCollection, "Blocks", ByteArrayTag.class).getValue();
+				            byte[] data = (byte[]) getChildTag(tagCollection, "Data", ByteArrayTag.class).getValue();
+
+				            List entities = (List) getChildTag(tagCollection, "Entities", ListTag.class).getValue();
+				            List tileentities = (List) getChildTag(tagCollection, "TileEntities", ListTag.class).getValue();
+
 				            nbt.close();
 				            fis.close();
 				            
+				            
+				            
 				            sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA+"New Property Group Created "+args[1]);
 							sender.sendMessage(ChatColor.AQUA+"Width="+width+" Length="+length);
+
 				        } catch (Exception e) {
 				            e.printStackTrace();
 				        }
+					}else if(args[0].equalsIgnoreCase("test")){
+						SchematicTools.reload(player, args[1]);
 					}else{
 						sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.RED+"you must type a command...");
 						sender.sendMessage(ChatColor.RED+"Type /Property Help for more info...");

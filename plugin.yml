@@ -1,6 +1,6 @@
 name: PropertyGroup
 version: 1.0
-main: com.randrdevelopment.PropertyGroupMain
+main: com.randrdevelopment.PropertyGroup
 author: FireBall1725
 
 commands:
