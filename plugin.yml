@@ -1,0 +1,9 @@
+name: PropertyGroup
+version: 1.0
+main: com.randrdevelopment.PropertyGroupMain
+author: FireBall1725
+
+commands:
+   property:
+      description: Main command for Property Groups.
+      usage: /<command> help
