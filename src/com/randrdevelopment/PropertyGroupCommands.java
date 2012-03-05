@@ -197,30 +197,58 @@ private PropertyGroup plugin;
 							}
 						}
 					}else if(args[0].equalsIgnoreCase("test")){
-						// Lets get the row and column of the next free property..
-						int qty = config.getInt(args[1]+".qty");
+						// Verify the property group is valid
+						if (config.getConfigurationSection(args[1]) != null)
+						{
+							// Lets get the row and column of the next free property..
+							int qty = config.getInt(args[1]+".qty");
+							boolean error = false;
+							boolean noproperties = true;
 						
-						for(int i=1; i<=qty; i++){
-							if (config.getBoolean(args[1]+".properties."+i+".created") == false){
-								// Found an empty spot..
-								int x = config.getInt(args[1]+".startlocation.x");
-								int y = config.getInt(args[1]+".startlocation.y");
-								int z = config.getInt(args[1]+".startlocation.z");
-								String worldname = config.getString(args[1]+".startlocation.world");
-								int width = config.getInt(args[1]+".width");
-								int length = config.getInt(args[1]+".length");
-								int spacing = config.getInt(args[1]+".propertyspacing");
-								int row = config.getInt(args[1]+".properties."+i+".row");
-								int col = config.getInt(args[1]+".properties."+i+".col");
+							for(int i=1; i<=qty; i++){
+								if (config.getBoolean(args[1]+".properties."+i+".created") == false){
+									noproperties = false;
 								
-								x = ((width + spacing) * row) + x;
-								z = ((length + spacing) * col) + z;
+									// Found an empty spot..
+									int x = config.getInt(args[1]+".startlocation.x");
+									int y = config.getInt(args[1]+".startlocation.y");
+									int z = config.getInt(args[1]+".startlocation.z");
+									String worldname = config.getString(args[1]+".startlocation.world");
+									int width = config.getInt(args[1]+".width");
+									int length = config.getInt(args[1]+".length");
+									int spacing = config.getInt(args[1]+".propertyspacing");
+									int row = config.getInt(args[1]+".properties."+i+".row");
+									int col = config.getInt(args[1]+".properties."+i+".col");
 								
-								SchematicTools.reload(args[1], worldname, x, y, z);
+									x = ((width + spacing) * row) + x;
+									z = ((length + spacing) * col) + z;
+								
+									SchematicTools.reload(args[1], worldname, x, y, z);
+								
+									config.set(args[1]+".properties."+i+".created", true);
+									try {
+										config.save(DirectoryStructure.getCfgProperties());
+									} catch (IOException e) {
+										error = true;
+										e.printStackTrace();
+									}
+									break;
+								}
 							}
-						}
 						
-						//SchematicTools.reload(args[1]);
+							if (error){
+								sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.RED+"Error creating property...");
+							} else {
+								if (noproperties){
+									sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.RED+"No free properties left in this group");
+								} else {
+									if (error == false)
+										sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA+"Property Created");
+								}
+							}
+						} else {
+							sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.RED+"Property Group Does Not Exist...");
+						}
 					}else{
 						sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.RED+"you must type a command...");
 						sender.sendMessage(ChatColor.RED+"Type /Property Help for more info...");
