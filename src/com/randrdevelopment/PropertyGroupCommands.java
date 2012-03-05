@@ -63,9 +63,9 @@ private PropertyGroup plugin;
 						sender.sendMessage(ChatColor.AQUA+"List "+ChatColor.DARK_AQUA+"<Group>"+ChatColor.AQUA+": List all properties in group");
 						sender.sendMessage(ChatColor.AQUA+"DeleteGroup: " +ChatColor.DARK_AQUA+"<Group>"+ChatColor.AQUA+"Delete a Property Group");
 						sender.sendMessage(ChatColor.AQUA+"Delete "+ChatColor.DARK_AQUA+"<Group> <Property>"+ChatColor.AQUA+": Delete a Property");
+						sender.sendMessage(ChatColor.AQUA+"AssignBlank"+ChatColor.DARK_AQUA+"<Group>"+ChatColor.AQUA+": Create a blank property assigned to noone");
 						sender.sendMessage(ChatColor.AQUA+"Assign "+ChatColor.DARK_AQUA+"<Group> <User>"+ChatColor.AQUA+": Assign user to property");
 						sender.sendMessage(ChatColor.AQUA+"TP "+ChatColor.DARK_AQUA+"<Property> "+ChatColor.AQUA+"(optional "+ChatColor.DARK_AQUA+"<user>"+ChatColor.AQUA+"): Teleport to property");
-						sender.sendMessage(ChatColor.GREEN+"-----------------------------------------------------");
 					}else if(args[0].equalsIgnoreCase("list")){
 						if(args.length != 2)
 						{
@@ -78,8 +78,13 @@ private PropertyGroup plugin;
 					}else if(args[0].equalsIgnoreCase("listgroups")){
 						// TODO: List all the groups
 						sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA+"Property Groups:");
+						int i = 0;
 		                for (String s : config.getKeys(false)) {
 		                	sender.sendMessage(ChatColor.AQUA+s);
+		                	i++;
+		                }
+		                if (i == 0){
+		                	sender.sendMessage(ChatColor.RED+"No Property Groups");
 		                }
 					}else if(args[0].equalsIgnoreCase("deletegroup")){
 						// TODO: Delete Group
@@ -169,34 +174,46 @@ private PropertyGroup plugin;
 							// Lets make sure the property group exists
 							if (config.getConfigurationSection(args[1]) != null)
 							{
-								if (args[2].equalsIgnoreCase("startpoint")){
-									// Set Start Point...
-									Location pos = player.getLocation();
-									int PosX = (int)pos.getX();
-									int PosY = (int)pos.getY();
-									int PosZ = (int)pos.getZ();
+								// TODO: Dont allow set start point if properties exist...
+								int qty = config.getInt(args[1]+".qty");
+								boolean noproperties = true;
+							
+								for(int i=1; i<=qty; i++){
+									if (config.getBoolean(args[1]+".properties."+i+".created") == false){
+										noproperties = false;
+									}
+								}
 								
-									World world = player.getWorld();
-									String worldName = world.getName();
+								if (noproperties){
+									if (args[2].equalsIgnoreCase("startpoint")){
+										// Set Start Point...
+										Location pos = player.getLocation();
+										int PosX = (int)pos.getX();
+										int PosY = (int)pos.getY();
+										int PosZ = (int)pos.getZ();
+								
+										World world = player.getWorld();
+										String worldName = world.getName();
 									
-									config.set(args[1]+".startlocation.x", PosX);
-									config.set(args[1]+".startlocation.y", PosY);
-									config.set(args[1]+".startlocation.z", PosZ);
-									config.set(args[1]+".startlocation.world", worldName);
+										config.set(args[1]+".startlocation.x", PosX);
+										config.set(args[1]+".startlocation.y", PosY);
+										config.set(args[1]+".startlocation.z", PosZ);
+										config.set(args[1]+".startlocation.world", worldName);
 									
-									try {
-										config.save(DirectoryStructure.getCfgProperties());
-										sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA+"Start Position Saved");
-									} catch (IOException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+										try {
+											config.save(DirectoryStructure.getCfgProperties());
+											sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA+"Start Position Saved");
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
 									}
 								}
 							} else {
 								sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.RED+"Property Group Does Not Exist...");
 							}
 						}
-					}else if(args[0].equalsIgnoreCase("test")){
+					}else if(args[0].equalsIgnoreCase("assignblank")){
 						// Verify the property group is valid
 						if (config.getConfigurationSection(args[1]) != null)
 						{
