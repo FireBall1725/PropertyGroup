@@ -179,7 +179,7 @@ private PropertyGroup plugin;
 								boolean noproperties = true;
 							
 								for(int i=1; i<=qty; i++){
-									if (config.getBoolean(args[1]+".properties."+i+".created") == false){
+									if (config.getBoolean(args[1]+".properties."+i+".created")){
 										noproperties = false;
 									}
 								}
@@ -208,6 +208,8 @@ private PropertyGroup plugin;
 											e.printStackTrace();
 										}
 									}
+								} else {
+									sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.RED+"Property Group Has Properties Created Already, Cannot modify...");
 								}
 							} else {
 								sender.sendMessage(ChatColor.GREEN+"[PropertyGroup] "+ChatColor.RED+"Property Group Does Not Exist...");
@@ -237,8 +239,8 @@ private PropertyGroup plugin;
 									int row = config.getInt(args[1]+".properties."+i+".row");
 									int col = config.getInt(args[1]+".properties."+i+".col");
 								
-									x = ((width + spacing) * row) + x;
-									z = ((length + spacing) * col) + z;
+									x = ((width + spacing) * (row - 1)) + x;
+									z = ((length + spacing) * (col - 1)) + z;
 								
 									SchematicTools.reload(args[1], worldname, x, y, z);
 								

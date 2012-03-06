@@ -56,10 +56,11 @@ public class SchematicTools {
 		try {
 			World world = Bukkit.getWorld(worldname);
 			
-	        EditSession es = new EditSession(new BukkitWorld(world), 20000);
+	        EditSession es = new EditSession(new BukkitWorld(world), 50000000);
 	        CuboidClipboard cc = CuboidClipboard.loadSchematic(saveFile);
-			Vector pos = new Vector(x, y, z);		
-			cc.paste(es, pos, false);
+			Vector pos = new Vector(x, y, z);	
+			//cc.paste(es, pos, false);
+			cc.place(es, pos, false);
 			return true;
 		} catch (Exception e) {
 			PropertyGroupLogger.severe(e.getMessage());
