@@ -1,4 +1,4 @@
-package com.randrdevelopment;
+package com.randrdevelopment.propertygroup;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,7 +8,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
 
-import com.randrdevelopment.log.PropertyGroupLogger;
+import com.randrdevelopment.propertygroup.log.PropertyGroupLogger;
 
 public class DirectoryStructure {
 	private static File pluginDir = new File("plugins", "PropertyGroup"); //$NON-NLS-1$ //$NON-NLS-2$

@@ -1,4 +1,4 @@
-package com.randrdevelopment;
+package com.randrdevelopment.propertygroup;
 
 import org.bukkit.event.Listener;
 

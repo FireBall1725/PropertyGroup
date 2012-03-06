@@ -1,4 +1,4 @@
-package com.randrdevelopment;
+package com.randrdevelopment.propertygroup;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -11,13 +11,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.randrdevelopment.command.CommandManager;
-import com.randrdevelopment.command.commands.CreateCommand;
-import com.randrdevelopment.command.commands.CreatePropertyCommand;
-import com.randrdevelopment.command.commands.ListGroupsCommand;
-import com.randrdevelopment.command.commands.ReloadConfigCommand;
-import com.randrdevelopment.command.commands.SetConfigCommand;
-import com.randrdevelopment.command.commands.SetStartPointCommand;
+import com.randrdevelopment.propertygroup.command.CommandManager;
+import com.randrdevelopment.propertygroup.command.commands.CreateCommand;
+import com.randrdevelopment.propertygroup.command.commands.CreatePropertyCommand;
+import com.randrdevelopment.propertygroup.command.commands.ListGroupsCommand;
+import com.randrdevelopment.propertygroup.command.commands.ReloadConfigCommand;
+import com.randrdevelopment.propertygroup.command.commands.SetConfigCommand;
+import com.randrdevelopment.propertygroup.command.commands.SetStartPointCommand;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;

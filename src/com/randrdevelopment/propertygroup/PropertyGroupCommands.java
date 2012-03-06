@@ -1,4 +1,4 @@
-package com.randrdevelopment;
+package com.randrdevelopment.propertygroup;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,7 +25,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.randrdevelopment.regions.SchematicTools;
+import com.randrdevelopment.propertygroup.regions.SchematicTools;
 import com.sk89q.worldedit.Vector;
 
 public class PropertyGroupCommands implements CommandExecutor {
