@@ -27,13 +27,13 @@ public class RegionTools {
 		}
 	}
 	
-	private boolean createRegion(String regionName, World world, Vector L1, Vector L2, int Priority){
+	private boolean createRegion(String regionName, World world, int x1, int x2, int y1, int y2, int z1, int z2, int Priority){
 		RegionManager m = wgp.getRegionManager(world);
 		if (m == null)
 			return false;
 		
-		BlockVector min = new BlockVector(L1.getX(), L1.getY(), L1.getZ());
-        BlockVector max = new BlockVector(L2.getX(), L2.getY(), L2.getZ());
+		BlockVector min = new BlockVector(x1, y1, z1);
+        BlockVector max = new BlockVector(x2, y2, z2);
 		
         StateFlag PVP = new StateFlag("pvp", true);
         StateFlag TNT = new StateFlag("tnt", true);
@@ -54,21 +54,12 @@ public class RegionTools {
 		}
 	}
 	
-	public static boolean createProtectedRegion(String regionName, String worldName, Location L1, Location L2, int Priority){
+	public static boolean createProtectedRegion(String regionName, String worldName, int x1, int x2, int y1, int y2, int z1, int z2, int Priority){
 		RegionTools rt = new RegionTools();
-		Vector min = new Vector();
-		min.setX(L1.getX());
-		min.setZ(L1.getZ());
-		min.setY(0);
-		
-		Vector max = new Vector();
-		max.setX(L2.getX());
-		max.setZ(L2.getZ());
-		max.setY(255);
 		
 		World world = Bukkit.getWorld(worldName);
 		
-		if (rt.createRegion(regionName, world, min, max, Priority))
+		if (rt.createRegion(regionName, world, x1, x2, y1, y2, z1, z2, Priority))
 			return true;
 		
 		return false;
