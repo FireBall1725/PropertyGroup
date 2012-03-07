@@ -11,11 +11,10 @@ import java.util.logging.Level;
 import com.randrdevelopment.propertygroup.log.PropertyGroupLogger;
 
 public class DirectoryStructure {
-	private static File pluginDir = new File("plugins", "PropertyGroup"); //$NON-NLS-1$ //$NON-NLS-2$
+	private static File pluginDir = new File("plugins", "PropertyGroup");
 	private static File schematicsDir;
-	private static final String schematicsFoldername = "schematics"; //$NON-NLS-1$
-	private static File persistFile, cfgProperties;
-	private static final String persistFilename = "persist.yml"; //$NON-NLS-1$
+	private static final String schematicsFoldername = "schematics";
+	private static File cfgProperties;
 	private static final String configProperties = "propertygroups.yml";
 	
 	public static void setup() {
@@ -32,10 +31,6 @@ public class DirectoryStructure {
 	public static File getSchematicsDirectory() {
 		return schematicsDir;
 	}
-
-	public static File getPersistFile() {
-		return persistFile;
-	}
 	
 	public static File getCfgProperties() {
 		return cfgProperties;
@@ -44,7 +39,6 @@ public class DirectoryStructure {
 	private static void setupDirectoryStructure() {
 		schematicsDir = new File(schematicsFoldername);
 
-		persistFile = new File(pluginDir, persistFilename);
 		cfgProperties = new File(pluginDir, configProperties);
 
 		createDir(pluginDir);
@@ -55,22 +49,7 @@ public class DirectoryStructure {
 	}
 	
 	private static void extractResources() {
-		//extractResource("/AI_settings.yml", pluginDir); //$NON-NLS-1$
-
-		//extractResource("/datafiles/board_styles/standard.yml", boardStyleDir); //$NON-NLS-1$
-		//extractResource("/datafiles/board_styles/open.yml", boardStyleDir); //$NON-NLS-1$
-		//extractResource("/datafiles/board_styles/sandwood.yml", boardStyleDir); //$NON-NLS-1$
-		//extractResource("/datafiles/board_styles/large.yml", boardStyleDir); //$NON-NLS-1$
-		//extractResource("/datafiles/board_styles/small.yml", boardStyleDir); //$NON-NLS-1$
-		//extractResource("/datafiles/board_styles/huge.yml", boardStyleDir); //$NON-NLS-1$
-
-		//extractResource("/datafiles/piece_styles/standard.yml", pieceStyleDir); //$NON-NLS-1$
-		//extractResource("/datafiles/piece_styles/twist.yml", pieceStyleDir); //$NON-NLS-1$
-		//extractResource("/datafiles/piece_styles/sandwood.yml", pieceStyleDir); //$NON-NLS-1$
-		//extractResource("/datafiles/piece_styles/large.yml", pieceStyleDir); //$NON-NLS-1$
-		//extractResource("/datafiles/piece_styles/small.yml", pieceStyleDir); //$NON-NLS-1$
-
-		// message resources no longer extracted here - this is now done by Messages.loadMessages()
+		//extractResource("/settings.yml", pluginDir); 
 	}
 
 	private static void createDir(File dir) {
@@ -78,13 +57,13 @@ public class DirectoryStructure {
 			return;
 		}
 		if (!dir.mkdir()) {
-			PropertyGroupLogger.warning("Can't make directory " + dir.getName()); //$NON-NLS-1$
+			PropertyGroupLogger.warning("Can't make directory " + dir.getName()); 
 		}
 	}
 
-	private static void extractResource(String from, File toDir) {
-		extractResource(from, toDir, false);
-	}
+	//private static void extractResource(String from, File toDir) {
+	//	extractResource(from, toDir, false);
+	//}
 
 	static void extractResource(String from, File to, boolean force) {
 		File of = to;

@@ -7,13 +7,18 @@ commands:
    property:
       description: Main command for Property Groups.
       usage: /<command> help
-      
+
 permissions:
     propertygroup.*:
         description: Gives access to all property group commands
         children:
-            doorman.create: true
-            
+            propertygroup.create: true
+            propertygroup.reload: true            
+
     propertygroup.create:
         description: Allows you to create a property group
+        default: op
+
+    propertygroup.reload:
+        description: Reload the configuration files
         default: op

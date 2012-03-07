@@ -1,13 +1,9 @@
 package com.randrdevelopment.propertygroup.regions;
 
 import java.io.File;
-import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 
 import com.randrdevelopment.propertygroup.log.PropertyGroupLogger;
 import com.randrdevelopment.propertygroup.DirectoryStructure;
@@ -15,9 +11,7 @@ import com.randrdevelopment.propertygroup.PropertyGroup;
 
 import com.sk89q.worldedit.CuboidClipboard;
 import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.FilenameException;
 import com.sk89q.worldedit.LocalPlayer;
-import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
@@ -28,8 +22,6 @@ public class SchematicTools {
 	private WorldEdit we;
 	private File saveFile;
 	private LocalPlayer localPlayer;
-	private EditSession editSession;
-	private LocalSession localSession;
 	
 	private SchematicTools () {
 		wep = PropertyGroup.getWorldEdit();
@@ -39,27 +31,26 @@ public class SchematicTools {
 		we = wep.getWorldEdit();	
 	}
 	
-	private boolean loadSchematic(String FileName) {
+	private boolean loadSchematicFile(String FileName){
 		try {
 			saveFile = we.getSafeSaveFile(localPlayer, DirectoryStructure.getSchematicsDirectory(), FileName, "schematic", new String[] { "schematic" });
 			return true;
-		} catch (Exception ex) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
 	
-	private boolean reloadTerrain(int x, int y, int z, String worldname) {
-		if (wep == null) {
+	private boolean placeSchematic(int blocks, int start_x, int start_y, int start_z, String worldName){
+		if (wep == null){
 			return false;
 		}
-
+		
 		try {
-			World world = Bukkit.getWorld(worldname);
+			World world = Bukkit.getWorld(worldName);
 			
-	        EditSession es = new EditSession(new BukkitWorld(world), 50000000);
-	        CuboidClipboard cc = CuboidClipboard.loadSchematic(saveFile);
-			Vector pos = new Vector(x, y, z);	
-			//cc.paste(es, pos, false);
+			EditSession es = new EditSession(new BukkitWorld(world), blocks);
+			CuboidClipboard cc = CuboidClipboard.loadSchematic(saveFile);
+			Vector pos = new Vector(start_x, start_y, start_z);
 			cc.place(es, pos, false);
 			return true;
 		} catch (Exception e) {
@@ -68,20 +59,18 @@ public class SchematicTools {
 		}
 	}
 	
-	public static boolean reload(String FileName, String worldname, int x, int y, int z) {
+	public static boolean reload(String FileName, String worldname, int x, int y, int z, int blocks) {
 		boolean restored = false;
 		try {
 			SchematicTools st = new SchematicTools();
-			st.loadSchematic(FileName);
-			restored = st.reloadTerrain(x, y, z, worldname);
-			restored = true;
+			if (st.loadSchematicFile(FileName)) {
+				if (restored = st.placeSchematic(blocks, x, y, z, worldname)) {
+					restored = true;
+				}
+			}
 		} catch (Exception e) {
 			restored = false;
 		}
 		return restored;
-	}
-	
-	public void undo() {
-		editSession.undo(editSession);
 	}
 }
