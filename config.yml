@@ -1,0 +1,19 @@
+RegionDefaults:
+    pvp: true
+    mob-damage: true
+    mob-spawning: true
+    creeper-explosion: true
+    ghast-fireball: true
+    tnt: true
+    lighter: true
+    fire-spread: true
+    lava-fire: true
+    lightning: true
+    chest-access: false
+    water-flow: true
+    lava-flow: true
+    use: true
+    leaf-decay: true
+    greeting: Welcome to %PropertyName% owned by %Owner%
+    greetingnoowner: Welcome to %PropertyName%
+    farewell: You are now leaving %PropertyName%

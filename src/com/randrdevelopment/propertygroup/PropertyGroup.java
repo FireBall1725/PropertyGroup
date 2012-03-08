@@ -41,6 +41,8 @@ public class PropertyGroup extends JavaPlugin {
 		loadWorldEdit();
 		loadWorldGuard();
 		
+		getConfig().options().copyDefaults(true);
+		
 		Log.info("[PropertyGroup] Property Groups plugin succesfully enabled!");
 	}
 	 
