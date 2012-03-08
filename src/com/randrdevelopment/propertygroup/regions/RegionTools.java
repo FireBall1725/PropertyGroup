@@ -9,6 +9,7 @@ import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.Flag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
@@ -35,13 +36,14 @@ public class RegionTools {
 		BlockVector min = new BlockVector(x1, y1, z1);
         BlockVector max = new BlockVector(x2, y2, z2);
 		
-        StateFlag PVP = new StateFlag("pvp", true);
-        StateFlag TNT = new StateFlag("tnt", true);
         //com.sk89q.worldguard.protection.flags.DefaultFlag.GREET_MESSAGE
-        StringFlag GREET_MESSAGE = new StringFlag("greet_message");
         ProtectedRegion region = new ProtectedCuboidRegion(regionName, min, max);
-        region.setFlag(GREET_MESSAGE, "Welcome to Property");
-        region.setFlag(PVP, State.ALLOW);
+
+        region.setFlag(DefaultFlag.GREET_MESSAGE, "Welcome to the Property");
+        region.setFlag(DefaultFlag.FAREWELL_MESSAGE, "Goodbye...");
+        region.setFlag(DefaultFlag.CHEST_ACCESS, State.DENY);
+        region.setFlag(DefaultFlag.MOB_DAMAGE, State.DENY);
+
         RegionManager regionManager = wgp.getRegionManager(world);
         regionManager.addRegion(region);
         

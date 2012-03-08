@@ -83,7 +83,9 @@ public class CreateCommand extends BaseCommand {
 
     		short width = (Short)getChildTag(tagCollection, "Width", ShortTag.class).getValue();
     		short length = (Short)getChildTag(tagCollection, "Length", ShortTag.class).getValue();
-    		short height = (Short)getChildTag(tagCollection, "Height", ShortTag.class).getValue(); 
+    		short height = (Short)getChildTag(tagCollection, "Height", ShortTag.class).getValue();
+    		
+    		
 
     		nbt.close();
     		fis.close();

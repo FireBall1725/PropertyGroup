@@ -70,7 +70,7 @@ public class CreatePropertyCommand extends BaseCommand{
 					
 				SchematicTools.reload(propertyGroup, worldname, x, y, z, blocks);
 
-				if (!RegionTools.createProtectedRegion(propertyGroup+"-"+row+"-"+col, worldname, x, x+width, 0, 255, z, z+length, 10))
+				if (!RegionTools.createProtectedRegion(propertyGroup+"-"+row+"-"+col, worldname, x, x+width-1, 0, 255, z, z+length-1, 10))
 					sender.sendMessage(plugin.getTag()+ChatColor.RED+"Error creating region...");
 				
 				propertyConfig.set(propertyGroup+".properties."+i+".created", true);

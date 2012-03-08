@@ -50,8 +50,11 @@ public class SchematicTools {
 			
 			EditSession es = new EditSession(new BukkitWorld(world), blocks);
 			CuboidClipboard cc = CuboidClipboard.loadSchematic(saveFile);
+			Vector originaloffset = cc.getOffset();
+			Vector newoffset = new Vector(0, originaloffset.getY(), 0);
+			cc.setOffset(newoffset);
 			Vector pos = new Vector(start_x, start_y, start_z);
-			cc.place(es, pos, false);
+			cc.paste(es, pos, false);
 			return true;
 		} catch (Exception e) {
 			PropertyGroupLogger.severe(e.getMessage());
