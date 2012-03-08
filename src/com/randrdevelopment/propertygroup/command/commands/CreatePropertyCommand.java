@@ -68,9 +68,15 @@ public class CreatePropertyCommand extends BaseCommand{
 				int blocks = length * width * height;
 					
 				SchematicTools.reload(propertyGroup, worldname, x, y, z, blocks);
-
-				if (!RegionTools.createProtectedRegion(propertyGroup+"-"+row+"-"+col, worldname, x, x+width-1, 0, 255, z, z+length-1, 10))
-					sender.sendMessage(plugin.getTag()+ChatColor.RED+"Error creating region...");
+				
+				// Create Region if configured to do so...
+				if (propertyConfig.getBoolean(propertyGroup+".createregion")) {
+					String playerName = null;
+					if (args[1].length() == 2)
+						playerName = args[1];
+					if (!RegionTools.createProtectedRegion(propertyGroup+"-"+row+"-"+col, worldname, x, x+width-1, 0, 255, z, z+length-1, 10, playerName))
+						sender.sendMessage(plugin.getTag()+ChatColor.RED+"Error creating region...");
+				}
 				
 				propertyConfig.set(propertyGroup+".properties."+i+".created", true);
 				plugin.savePropertyConfig();
