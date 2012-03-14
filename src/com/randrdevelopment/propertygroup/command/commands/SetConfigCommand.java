@@ -12,12 +12,12 @@ public class SetConfigCommand extends BaseCommand{
 	
 	public SetConfigCommand(PropertyGroup plugin) {
         super(plugin);
-        name = "Set";
+        name = "SetConfig";
         description = "Sets Configuration Options.";
-        usage = "/property set <groupname> <option> <value>";
+        usage = "/property setconfig <groupname> <option> <value>";
         minArgs = 3;
         maxArgs = 3;
-        identifiers.add("property set");
+        identifiers.add("property setconfig");
     }
 	
     @Override
@@ -27,16 +27,9 @@ public class SetConfigCommand extends BaseCommand{
     	String setOption = args[1].toLowerCase();
     	String setValue = args[2].toLowerCase();
     	
-    	sender.sendMessage(plugin.getTag()+"Arg 0: " + propertyGroup);
-    	sender.sendMessage(plugin.getTag()+"Arg 1: " + setOption);
-    	sender.sendMessage(plugin.getTag()+"Arg 2: " + setValue);
     	
-    	if (args[1] == "hi"){
-    		sender.sendMessage("hi test 1");
-    	}
-    	if (args[1].toLowerCase() == "hi"){
-    		sender.sendMessage("hi test 2");
-    	}
+    	
+    	
     	
     	if (setOption == "createregion"){
     		sender.sendMessage(plugin.getTag()+"made it here...");
