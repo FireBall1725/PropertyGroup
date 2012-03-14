@@ -27,8 +27,12 @@ public class SetConfigCommand extends BaseCommand{
     	String setOption = args[1].toLowerCase();
     	String setValue = args[2].toLowerCase();
     	
-    	
-    	
+    	sender.sendMessage("[" + setOption + "]");
+    	if (setOption.equalsIgnoreCase("test")) {
+    		sender.sendMessage("IT WORKED!!!");
+    	} else {
+    		sender.sendMessage("IT DIDNT WORK!!! WTF??");
+    	}
     	
     	
     	if (setOption == "createregion"){

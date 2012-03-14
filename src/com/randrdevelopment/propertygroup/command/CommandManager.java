@@ -55,10 +55,6 @@ public class CommandManager {
                 sender.sendMessage(ChatColor.AQUA + "Usage: " + match.getUsage());
             }
         }
-        else {
-        	sender.sendMessage(plugin.getTag() + ChatColor.RED + "command not valid: " + match.getName());
-        }
-
         return true;
     }
 
