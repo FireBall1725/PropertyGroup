@@ -26,17 +26,8 @@ public class SetConfigCommand extends BaseCommand{
     	String propertyGroup = args[0].toLowerCase();
     	String setOption = args[1].toLowerCase();
     	String setValue = args[2].toLowerCase();
-    	
-    	sender.sendMessage("[" + setOption + "]");
-    	if (setOption.equalsIgnoreCase("test")) {
-    		sender.sendMessage("IT WORKED!!!");
-    	} else {
-    		sender.sendMessage("IT DIDNT WORK!!! WTF??");
-    	}
-    	
-    	
+    	    	
     	if (setOption == "createregion"){
-    		sender.sendMessage(plugin.getTag()+"made it here...");
     		if (setValue == "true"){
     			propertyConfig.set(propertyGroup+".createregion", true);
     			sender.sendMessage(plugin.getTag() + "Create Region Enabled");

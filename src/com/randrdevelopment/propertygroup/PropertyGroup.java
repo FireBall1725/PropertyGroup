@@ -1,6 +1,7 @@
 package com.randrdevelopment.propertygroup;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -11,11 +12,14 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.randrdevelopment.propertygroup.command.BaseCommand;
 import com.randrdevelopment.propertygroup.command.CommandManager;
 import com.randrdevelopment.propertygroup.command.commands.CreateCommand;
+import com.randrdevelopment.propertygroup.command.commands.CreateGroupCommand;
 import com.randrdevelopment.propertygroup.command.commands.CreatePropertyCommand;
 import com.randrdevelopment.propertygroup.command.commands.ListGroupsCommand;
 import com.randrdevelopment.propertygroup.command.commands.ReloadConfigCommand;
+import com.randrdevelopment.propertygroup.command.commands.SetCommand;
 import com.randrdevelopment.propertygroup.command.commands.SetConfigCommand;
 import com.randrdevelopment.propertygroup.command.commands.SetStartPointCommand;
 
@@ -30,6 +34,7 @@ public class PropertyGroup extends JavaPlugin {
 	private static PropertyGroup instance;
 	private CommandManager commandManager;
 	private FileConfiguration propertyConfig = null;
+	private String propertyGroup;
 	
 	public void onEnable(){ 
 		instance = this;
@@ -68,12 +73,12 @@ public class PropertyGroup extends JavaPlugin {
 	
 	private void registerCommands() {
         commandManager = new CommandManager();
-        commandManager.addCommand(new CreateCommand(this));
         commandManager.addCommand(new ListGroupsCommand(this));
         commandManager.addCommand(new ReloadConfigCommand(this));
-        commandManager.addCommand(new SetConfigCommand(this));
+        commandManager.addCommand(new SetCommand(this));
         commandManager.addCommand(new SetStartPointCommand(this));
         commandManager.addCommand(new CreatePropertyCommand(this));
+        commandManager.addCommand(new CreateGroupCommand(this));
     }
 	
 	public static PropertyGroup getInstance() {
@@ -112,6 +117,14 @@ public class PropertyGroup extends JavaPlugin {
 	public String getTag() {
 		String tag = ChatColor.GREEN+"[PropertyGroup] "+ChatColor.AQUA;
 		return tag;
+	}
+	
+	public void setPropertyName(String propertyName) {
+		propertyGroup = propertyName;
+	}
+	
+	public String getPropertyName() {
+		return propertyGroup;
 	}
 	
 	public FileConfiguration getPropertyConfig() {
