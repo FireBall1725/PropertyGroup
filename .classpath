@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="org/jnbt/" kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/Users/tylerreed/Dropbox/Java/api/bukkit-1.2.2-R0.1-20120302.133818-8.jar">
 		<attributes>
@@ -13,6 +13,5 @@
 			<attribute name="javadoc_location" value="http://www.sk89q.com/docs/worldguard/api/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/tylerreed/Dropbox/Java/api/jnbt-1.1.jar" sourcepath="/Users/tylerreed/Downloads/jnbt/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
