@@ -1,6 +1,7 @@
 package com.randrdevelopment.propertygroup;
 
 import java.io.IOException;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -30,7 +31,8 @@ public class PropertyGroup extends JavaPlugin {
 	private static PropertyGroup instance;
 	private CommandManager commandManager;
 	private FileConfiguration propertyConfig = null;
-	private String propertyGroup;
+	private String propertyGroup = null;
+	private Set<int[]> blocks = null;
 	
 	public void onEnable(){ 
 		instance = this;
@@ -128,6 +130,14 @@ public class PropertyGroup extends JavaPlugin {
 	        reloadPropertyConfig();
 	    }
 	    return propertyConfig;
+	}
+	
+	public void setBlockData(Set<int[]> blockdata) {
+		blocks = blockdata;
+	}
+	
+	public Set<int[]> getBlockData() {
+		return blocks;
 	}
 	
 	public void reloadPropertyConfig() {
