@@ -3,10 +3,9 @@ package com.randrdevelopment.propertygroup.command.commands;
 import java.util.Set;
 
 import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -72,21 +71,22 @@ public class SetCommand extends BaseCommand{
     			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Property spacing must be a number");
     		}
     	} else if (setOption.equalsIgnoreCase("startpoint")){
-    		// Verify we are not in edit mode
-        	Location loc = player.getLocation().getBlock().getLocation();
+    		if (setValue.equalsIgnoreCase("here")){
+    			// Verify we are not in edit mode
+    			Location loc = player.getLocation().getBlock().getLocation();
         	
-        	World world = loc.getWorld();
-        	String worldName = world.getName();
+        		World world = loc.getWorld();
+        		String worldName = world.getName();
     			
-        	propertyConfig.set(propertyGroup+".startlocation.x", loc.getBlockX());
-        	propertyConfig.set(propertyGroup+".startlocation.y", loc.getBlockY());
-        	propertyConfig.set(propertyGroup+".startlocation.z", loc.getBlockZ());
-        	propertyConfig.set(propertyGroup+".startlocation.world", worldName);
+        		propertyConfig.set(propertyGroup+".startlocation.x", loc.getBlockX());
+        		propertyConfig.set(propertyGroup+".startlocation.y", loc.getBlockY());
+        		propertyConfig.set(propertyGroup+".startlocation.z", loc.getBlockZ());
+        		propertyConfig.set(propertyGroup+".startlocation.world", worldName);
         	    			
-        	plugin.savePropertyConfig();
+        		plugin.savePropertyConfig();
         	    			
-        	sender.sendMessage(plugin.getTag()+"Start Point set for property group '"+propertyGroup+"'");
-    		
+        		sender.sendMessage(plugin.getTag()+"Start Point set for property group '"+propertyGroup+"'");
+    		}
     	} else if (setOption.equalsIgnoreCase("rows")){
     		// Verify we are not in edit mode
     		
@@ -109,7 +109,7 @@ public class SetCommand extends BaseCommand{
     			int spacing = Integer.parseInt(setValue);
     			if (spacing >= 0){
     				propertyConfig.set(propertyGroup+".cols", spacing);
-    				sender.sendMessage(plugin.getTag() + "Rows set to " + spacing);
+    				sender.sendMessage(plugin.getTag() + "Cols set to " + spacing);
     				plugin.savePropertyConfig();
     			} else {
     				sender.sendMessage(plugin.getTag() + ChatColor.RED + "Cols cannot be a negative number.");
@@ -151,17 +151,14 @@ public class SetCommand extends BaseCommand{
 				
     			Location p1 = new Location(world, x, y, z);
     			Location p2 = new Location(world, endx, y, endz);    			
-    			
-    			// Setup material to be used
-    			Material material = Material.WOOL;
-                byte color = DyeColor.valueOf("RED").getData();
                 
                 // Show the frame.
-                final Set<int[]> blocks = VisualTools.showRegion(player, world, p1, p2, material.getId(), color);
+                final Set<int[]> blocks = VisualTools.showRegion(world, p1, p2);
                 plugin.setBlockData(blocks);
                 
     		} else if (setValue.equalsIgnoreCase("false")){
     			// Verify region is already being displayed
+    			HideFrame(player.getWorld());
     		} else {
     			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Invalid option for 'showregion'.  Valid options are True and False");
     		}
@@ -274,12 +271,15 @@ public class SetCommand extends BaseCommand{
     	}
     }
     
-    public void HideFrame(Player player, World world) {
+    public void HideFrame(World world) {
     	Set<int[]> blocks = plugin.getBlockData();
     	
+    	Block newBlock;
+    	
         // Hide the frame.
-        for (int[] buffer : blocks)
-        	player.sendBlockChange(new Location(world, buffer[0], buffer[1], buffer[2]), buffer[3], (byte) 0);
-        
+        for (int[] buffer : blocks) {
+        	newBlock = world.getBlockAt(buffer[0], buffer[1], buffer[2]);
+            newBlock.setTypeId(buffer[3]);
+        }        
     }
 }
