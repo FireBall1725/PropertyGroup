@@ -17,9 +17,9 @@ public class SetStartPointCommand extends BaseCommand{
         super(plugin);
         name = "SetStartPoint";
         description = "Sets Property Group Start Point.";
-        usage = "/property setstartpoint <groupname>";
-        minArgs = 1;
-        maxArgs = 1;
+        usage = "/property setstartpoint";
+        minArgs = 0;
+        maxArgs = 0;
         identifiers.add("property setstartpoint");
     }
 	
@@ -54,7 +54,6 @@ public class SetStartPointCommand extends BaseCommand{
     	// Verify the region is not being shown, if it is, hide it first
     	
     	
-		// Verify we are not in edit mode
 		Location loc = player.getLocation().getBlock().getLocation();
 	
 		World world = loc.getWorld();

@@ -15,10 +15,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.randrdevelopment.propertygroup.command.CommandManager;
 import com.randrdevelopment.propertygroup.command.commands.CreateGroupCommand;
 import com.randrdevelopment.propertygroup.command.commands.CreatePropertyCommand;
+import com.randrdevelopment.propertygroup.command.commands.HideRegionCommand;
 import com.randrdevelopment.propertygroup.command.commands.ListGroupsCommand;
 import com.randrdevelopment.propertygroup.command.commands.ReloadConfigCommand;
+import com.randrdevelopment.propertygroup.command.commands.SaveGroupCommand;
 import com.randrdevelopment.propertygroup.command.commands.SetCommand;
+import com.randrdevelopment.propertygroup.command.commands.SetSizeCommand;
 import com.randrdevelopment.propertygroup.command.commands.SetStartPointCommand;
+import com.randrdevelopment.propertygroup.command.commands.ShowRegionCommand;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -71,12 +75,16 @@ public class PropertyGroup extends JavaPlugin {
 	
 	private void registerCommands() {
         commandManager = new CommandManager();
+        commandManager.addCommand(new CreatePropertyCommand(this));
         commandManager.addCommand(new ListGroupsCommand(this));
         commandManager.addCommand(new ReloadConfigCommand(this));
         commandManager.addCommand(new SetCommand(this));
         commandManager.addCommand(new SetStartPointCommand(this));
-        commandManager.addCommand(new CreatePropertyCommand(this));
         commandManager.addCommand(new CreateGroupCommand(this));
+        commandManager.addCommand(new SetSizeCommand(this));
+        commandManager.addCommand(new ShowRegionCommand(this));
+        commandManager.addCommand(new HideRegionCommand(this));
+        commandManager.addCommand(new SaveGroupCommand(this));
     }
 	
 	public static PropertyGroup getInstance() {

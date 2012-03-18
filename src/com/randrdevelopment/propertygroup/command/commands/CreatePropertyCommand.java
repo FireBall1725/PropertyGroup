@@ -42,7 +42,10 @@ public class CreatePropertyCommand extends BaseCommand{
 		}
     		
     	// Lets get the row and column of the next free property..
-    	int qty = propertyConfig.getInt(propertyGroup+".qty");
+    	int Rows = propertyConfig.getInt(propertyGroup+".rows");
+		int Cols = propertyConfig.getInt(propertyGroup+".cols");
+		
+    	int qty = Rows * Cols;
     	boolean noproperties = true;
 		
     	for(int i=1; i<=qty; i++){

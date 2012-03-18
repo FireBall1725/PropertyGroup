@@ -1,10 +1,6 @@
 package com.randrdevelopment.propertygroup.command.commands;
 
-import java.util.Set;
-
 import org.bukkit.ChatColor;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -168,17 +164,5 @@ public class SetCommand extends BaseCommand{
     	} else {
     		sender.sendMessage(plugin.getTag() + ChatColor.RED + setOption + " is not a valid option");
     	}
-    }
-    
-    public void HideFrame(World world) {
-    	Set<int[]> blocks = plugin.getBlockData();
-    	
-    	Block newBlock;
-    	
-        // Hide the frame.
-        for (int[] buffer : blocks) {
-        	newBlock = world.getBlockAt(buffer[0], buffer[1], buffer[2]);
-            newBlock.setTypeId(buffer[3]);
-        }        
     }
 }
