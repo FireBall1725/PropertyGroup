@@ -26,17 +26,10 @@ public class SetStartPointCommand extends BaseCommand{
     @Override
     public void execute(CommandSender sender, String[] args) {
     	propertyConfig = plugin.getPropertyConfig();
-    	String propertyGroup = args[0].toLowerCase();
+    	
     	Player player = null;
     	if (sender instanceof Player) {
     		player = (Player) sender;
-    	}
-    	
-    	// Validate non-console command
-    	if (player == null)
-    	{
-    		sender.sendMessage(plugin.getTag() + ChatColor.RED + "You must be a player to create property groups");
-    		return;
     	}
     	
     	// Validate permissions level
@@ -46,42 +39,34 @@ public class SetStartPointCommand extends BaseCommand{
     		return;
     	}
     	
-    	// Validate property group exists
-    	if (propertyConfig.getConfigurationSection(propertyGroup) == null)
+    	// Verify that there is a property group being created
+    	if (plugin.getPropertyName() == null)
     	{
-    		sender.sendMessage(plugin.getTag()+ChatColor.RED+"Property Group '"+propertyGroup+"' does not exist.");
-    		return;
-    	}
-    	    	
-    	// Verify there are no properties
-    	int qty = propertyConfig.getInt(propertyGroup+".qty");
-    	boolean noProperties = true;
-    		
-    	for (int i=1; i<qty; i++){
-    		if (propertyConfig.getBoolean(propertyGroup+".properties."+i+".created")){
-    			noProperties = false;
-    	    }
-    	}
-    		
-    	if (!noProperties)
-    	{
-    		sender.sendMessage(plugin.getTag()+ChatColor.RED+"Property Group '"+propertyGroup+"' can not be set, already has properties");
+    		sender.sendMessage(plugin.getTag()+ChatColor.RED+"You must first create a property group");
     		return;
     	}
     	
-    	// Set Location
-    	Location loc = player.getLocation().getBlock().getLocation();
-            	
-    	World world = loc.getWorld();
-    	String worldName = world.getName();
-			
-    	propertyConfig.set(propertyGroup+".startlocation.x", loc.getBlockX());
-    	propertyConfig.set(propertyGroup+".startlocation.y", loc.getBlockY());
-    	propertyConfig.set(propertyGroup+".startlocation.z", loc.getBlockZ());
-    	propertyConfig.set(propertyGroup+".startlocation.world", worldName);
-    	    			
-    	plugin.savePropertyConfig();
-    	    			
-    	sender.sendMessage(plugin.getTag()+"Start Point set for property group '"+propertyGroup+"'");
+    	String propertyGroup = plugin.getPropertyName();
+    	
+    	// Verify that we are not in edit mode
+    	
+    	
+    	// Verify the region is not being shown, if it is, hide it first
+    	
+    	
+		// Verify we are not in edit mode
+		Location loc = player.getLocation().getBlock().getLocation();
+	
+		World world = loc.getWorld();
+		String worldName = world.getName();
+		
+		propertyConfig.set(propertyGroup+".startlocation.x", loc.getBlockX());
+		propertyConfig.set(propertyGroup+".startlocation.y", loc.getBlockY());
+		propertyConfig.set(propertyGroup+".startlocation.z", loc.getBlockZ());
+		propertyConfig.set(propertyGroup+".startlocation.world", worldName);
+	    			
+		plugin.savePropertyConfig();
+	    			
+		sender.sendMessage(plugin.getTag()+"Start Point set for property group '"+propertyGroup+"'");
     }	    		
 }

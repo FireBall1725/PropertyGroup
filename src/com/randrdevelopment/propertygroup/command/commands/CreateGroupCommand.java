@@ -118,7 +118,10 @@ public class CreateGroupCommand extends BaseCommand{
     	plugin.setPropertyName(propertyGroup);
     	
     	// Lets show the user what they need to do next
-    	sender.sendMessage(plugin.getTag()+"Property group '"+propertyGroup+"' has been added.  Configure the property group with the '/property set' command");
+    	sender.sendMessage(plugin.getTag()+"Property group '"+propertyGroup+"' has been created.");
+    	sender.sendMessage(ChatColor.AQUA + "Set start point with '/property setstartpoint'");
+    	sender.sendMessage(ChatColor.AQUA + "Set rows and cols with '/property setsize <rows> <cols>'");
+    	sender.sendMessage(ChatColor.AQUA + "Set advanced options with '/property set'");
     }
     
     private static Tag getChildTag(Map<String, Tag> items, String key, Class<? extends Tag> expected) {

@@ -3,7 +3,6 @@ package com.randrdevelopment.propertygroup.command.commands;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 
 import com.randrdevelopment.propertygroup.PropertyGroup;
 import com.randrdevelopment.propertygroup.command.BaseCommand;
@@ -14,7 +13,7 @@ public class SetSizeCommand extends BaseCommand{
 	public SetSizeCommand(PropertyGroup plugin) {
         super(plugin);
         name = "SetSize";
-        description = "Reloads the configuration.";
+        description = "Sets the rows and cols in the property group.";
         usage = "/property setsize <rows> <cols>";
         minArgs = 2;
         maxArgs = 2;
@@ -42,6 +41,9 @@ public class SetSizeCommand extends BaseCommand{
     	String propertyGroup = plugin.getPropertyName();
     	
     	// Verify that we are not in edit mode
+    	
+    	
+    	// Verify the region is not being shown, if it is, hide it first
     	
     	
     	// Verify that rows and cols are integers
