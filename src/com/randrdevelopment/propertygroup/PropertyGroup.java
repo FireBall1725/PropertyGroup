@@ -44,6 +44,10 @@ public class PropertyGroup extends JavaPlugin {
 		Log.info("[PropertyGroup] Starting Property Groups Version 1.0");
 		
 		DirectoryStructure.setup();
+		// Setup default configuration
+		getConfig().options().copyDefaults(true);
+		saveConfig();
+		
 		registerCommands();
 		loadEssentials();
 		loadWorldEdit();
