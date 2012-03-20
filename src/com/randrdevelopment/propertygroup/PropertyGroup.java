@@ -48,8 +48,8 @@ public class PropertyGroup extends JavaPlugin {
 		Log.info("[PropertyGroup] Starting Property Groups Version 1.0");
 		
 		// Setup default configuration
-		//getConfig().options().copyDefaults(true);
-		//saveConfig();
+		getConfig().options().copyDefaults(true);
+		saveConfig();
 		
 		// Setup property groups configuration
 		getPropertyConfig();
