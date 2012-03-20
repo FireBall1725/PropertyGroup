@@ -29,7 +29,7 @@ RegionFlagDefaults:
     
     # Region Greetings / Farewell Messages
     # Valid tags are %PropertyName% for the property name and %Owner% for the owners name.
-    greeting: Welcome to %PropertyName%. Owned by: %Owner%
+    greeting: Welcome to %PropertyName%. Owned by %Owner%
     greeting-noowner: Welcome to %PropertyName%.
     farewell: You are now leaving %PropertyName%.
 
