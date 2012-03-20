@@ -26,6 +26,7 @@ public class ReloadConfigCommand extends BaseCommand{
     		return;
     	}
     	
+    	// Reload configuration file.
     	plugin.reloadPropertyConfig();
     	sender.sendMessage(plugin.getTag() + "Configuration Reloaded");
     }
