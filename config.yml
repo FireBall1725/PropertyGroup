@@ -1,23 +1,49 @@
-Version: 1.0.0
-# This sets the default options for the worldguard flags.
-# True = Allow and False = Deny
+##################################################################################################
+# This is the default configuration for the Property Groups.  When a property group              #
+# is created it will use these defaults.  The flags can be set using the                         #
+# /property set <option> <value> inside the game if you wish to change something                 #
+# after the group has been created.                                                              #
+##################################################################################################
+
+##################################################################################################
+# DEFAULT WORLDGUARD FLAGS                                                                       #
+# This sets the default options for the worldguard flags                                         #
+# True = Allow and False = Deny                                                                  #
+##################################################################################################
 RegionFlagDefaults:
-    pvp: true
-    mob-damage: true
-    mob-spawning: true
-    creeper-explosion: true
-    ghast-fireball: true
-    tnt: true
-    lighter: true
-    fire-spread: true
-    lava-fire: true
-    lightning: true
-    chest-access: false
-    water-flow: true
-    lava-flow: true
-    use: true
-    leaf-decay: true
+    pvp: true                # Allow PVP on the property (default: true)
+    mob-damage: true         # Allow user to recieve mob damage on the property (default: true)
+    mob-spawning: true       # Allow mobs to spawn on the property (default: true)
+    creeper-explosion: true  # Allow creepers to explode on the property (default: true)
+    ghast-fireball: true     # Allow ghasts to shoot fireballs on the property (default: true)
+    tnt: true                # Allow the use of TNT on the property (default: true)
+    lighter: true            # Allow the user of the lighter on the property (default: true)
+    fire-spread: true        # Allow fire to spread on the property (default: true)
+    lava-fire: true          # Allow fire on the property (default: true)
+    lightning: true          # Allow lightning to strike property (default: true)
+    chest-access: false      # Allow guests to property to open chests (default: false)
+    water-flow: true         # Allow water to flow on property (default: true)
+    lava-flow: true          # Allow lava to flow on property (default: true)
+    use: true                # Allow guests to property to use buttons, levers (default: true)
+    leaf-decay: true         # Allow leaves to decay (default: true)
+    
+    # Region Greetings / Farewell Messages
     # Valid tags are %PropertyName% for the property name and %Owner% for the owners name.
-    greeting: Welcome to %PropertyName% owned by %Owner%
-    greetingnoowner: Welcome to %PropertyName%
-    farewell: You are now leaving %PropertyName%
+    greeting: Welcome to %PropertyName%. Owned by: %Owner%
+    greeting-noowner: Welcome to %PropertyName%.
+    farewell: You are now leaving %PropertyName%.
+
+##################################################################################################
+# DEFAULT OPTIONS FOR PROPERTY GROUPS                                                            #
+# This sets the default options that are set when creating a new property group                  #
+##################################################################################################
+PropertyGroupDefaults:
+    userteleport: false      # Teleport the user to the property (default: false)
+    propertyspacing: 10      # Amount of space (in blocks) between the properties (default: 10)
+    createregion: false      # Create a worldguard region around the property (default: false)
+    assignhome: false        # Set the /home of the user to the property (default: false)
+
+##################################################################################################
+# DO NOT EDIT BELOW THIS LINE - FOR INTERNAL USE ONLY                                            #
+##################################################################################################
+config-version: 1.0.0

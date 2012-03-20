@@ -8,6 +8,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
 
+import org.bukkit.configuration.Configuration;
+
 import com.randrdevelopment.propertygroup.log.PropertyGroupLogger;
 
 public class DirectoryStructure {
@@ -16,11 +18,17 @@ public class DirectoryStructure {
 	private static final String schematicsFoldername = "schematics";
 	private static File cfgProperties;
 	private static final String configProperties = "propertygroups.yml";
+	private static PropertyGroup plugin;
+	
+	public static Configuration getConfig() {
+		return plugin.getConfig();
+	}
 	
 	public static void setup() {
 		pluginDir = PropertyGroup.getInstance().getDataFolder();
-		
+				
 		setupDirectoryStructure();
+		setupDefaultConfiguration();
 		extractResources();
 	}
 
@@ -42,6 +50,13 @@ public class DirectoryStructure {
 		cfgProperties = new File(pluginDir, configProperties);
 
 		createDir(pluginDir);
+	}
+	
+	private static void setupDefaultConfiguration() {
+		plugin.getConfig().options().copyDefaults(true);
+		//Configuration config = plugin.getConfig();
+		
+		plugin.saveConfig();
 	}
 	
 	public static File getJarFile() {
