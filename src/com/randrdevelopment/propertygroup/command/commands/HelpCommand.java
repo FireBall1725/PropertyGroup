@@ -20,8 +20,6 @@ public class HelpCommand extends BaseCommand{
 	@Override
 	public void execute(CommandSender sender, String[] args) {
 		sender.sendMessage(plugin.getTag() + "Plugin Help");
-		sender.sendMessage(ChatColor.AQUA+"/property create <groupname> <rows> <cols> - Create new property group");
-		sender.sendMessage(ChatColor.AQUA+"/property setstartpoint <groupname> - Set starting point");
-		sender.sendMessage(ChatColor.AQUA+"/property createproperty <groupname> [user] - Manually create property");
+		//TODO: Create Help
 	}
 }
