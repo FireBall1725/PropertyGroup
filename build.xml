@@ -24,8 +24,8 @@
 		<mkdir dir="${dist}"/>
 		<jar jarfile="${dist}/${pluginname}.jar">
 			<fileset dir="${bin}"/>
-			<fileset file="${src}/plugin.yml"/>
-			<fileset file="${src}/config.yml"/>
+			<fileset file="plugin.yml"/>
+			<fileset file="config.yml"/>
 		</jar>
 	</target>
 
