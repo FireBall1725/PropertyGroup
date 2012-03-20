@@ -1,7 +1,10 @@
 package com.randrdevelopment.propertygroup;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -36,6 +39,7 @@ public class PropertyGroup extends JavaPlugin {
 	private static PropertyGroup instance;
 	private CommandManager commandManager;
 	private FileConfiguration propertyConfig = null;
+	private File propertyConfigFile = null;
 	private String propertyGroup = null;
 	private Set<int[]> blocks = null;
 	
@@ -43,10 +47,13 @@ public class PropertyGroup extends JavaPlugin {
 		instance = this;
 		Log.info("[PropertyGroup] Starting Property Groups Version 1.0");
 		
-		DirectoryStructure.setup();
 		// Setup default configuration
-		getConfig().options().copyDefaults(true);
-		saveConfig();
+		//getConfig().options().copyDefaults(true);
+		//saveConfig();
+		
+		// Setup property groups configuration
+		getPropertyConfig();
+		savePropertyConfig();
 		
 		registerCommands();
 		loadEssentials();
@@ -57,7 +64,7 @@ public class PropertyGroup extends JavaPlugin {
 	}
 	 
 	public void onDisable(){ 
-	
+		Log.info("[PropertyGroup] Property Groups plugin succesfully disabled!");
 	}
 	
     @Override
@@ -138,13 +145,6 @@ public class PropertyGroup extends JavaPlugin {
 		return propertyGroup;
 	}
 	
-	public FileConfiguration getPropertyConfig() {
-	    if (propertyConfig == null) {
-	        reloadPropertyConfig();
-	    }
-	    return propertyConfig;
-	}
-	
 	public void setBlockData(Set<int[]> blockdata) {
 		blocks = blockdata;
 	}
@@ -153,18 +153,35 @@ public class PropertyGroup extends JavaPlugin {
 		return blocks;
 	}
 	
+	public FileConfiguration getPropertyConfig() {
+	    if (propertyConfig == null) {
+	        reloadPropertyConfig();
+	    }
+	    return propertyConfig;
+	}
+	
 	public void reloadPropertyConfig() {
-	    propertyConfig = YamlConfiguration.loadConfiguration(DirectoryStructure.getCfgProperties());
+	    if (propertyConfigFile == null) {
+	    	propertyConfigFile = new File(getDataFolder(), "propertygroups.yml");
+	    }
+	    propertyConfig = YamlConfiguration.loadConfiguration(propertyConfigFile);
+	     
+	    // Look for defaults in the jar
+	    InputStream defConfigStream = getResource("propertygroups.yml");
+	    if (defConfigStream != null) {
+	    	YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+	    	propertyConfig.setDefaults(defConfig);
+	    }
 	}
 	
 	public void savePropertyConfig() {
-	    if (propertyConfig == null) {
-	    	return;
-	    }
-	    try {
-	        propertyConfig.save(DirectoryStructure.getCfgProperties());
-	    } catch (IOException ex) {
-	        //Logger.getLogger(JavaPlugin.class.getName()).log(Level.SEVERE, "Could not save config to " + customConfigFile, ex);
-	    }
+	    if (propertyConfig == null || propertyConfigFile == null) {
+	        return;
+	        }
+	        try {
+	        	propertyConfig.save(propertyConfigFile);
+	        } catch (IOException ex) {
+	            Logger.getLogger(JavaPlugin.class.getName()).log(Level.SEVERE, "Could not save config to " + propertyConfigFile, ex);
+	        }
 	}
 }

@@ -18,7 +18,6 @@ import com.randrdevelopment.propertygroup.command.BaseCommand;
 
 public class CreateGroupCommand extends BaseCommand{
 	FileConfiguration propertyConfig;
-	private static PropertyGroup plugin;
 	
 	public CreateGroupCommand(PropertyGroup plugin) {
         super(plugin);

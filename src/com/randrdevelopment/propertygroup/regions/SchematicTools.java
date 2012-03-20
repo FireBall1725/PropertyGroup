@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 import com.randrdevelopment.propertygroup.log.PropertyGroupLogger;
-import com.randrdevelopment.propertygroup.DirectoryStructure;
 import com.randrdevelopment.propertygroup.PropertyGroup;
 
 import com.sk89q.worldedit.CuboidClipboard;
@@ -33,7 +32,8 @@ public class SchematicTools {
 	
 	private boolean loadSchematicFile(String FileName){
 		try {
-			saveFile = we.getSafeSaveFile(localPlayer, DirectoryStructure.getSchematicsDirectory(), FileName, "schematic", new String[] { "schematic" });
+			File schematicsDir = new File("schematics");
+			saveFile = we.getSafeSaveFile(localPlayer, schematicsDir, FileName, "schematic", new String[] { "schematic" });
 			return true;
 		} catch (Exception e) {
 			return false;
