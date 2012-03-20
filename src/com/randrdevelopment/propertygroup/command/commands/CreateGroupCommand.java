@@ -18,6 +18,7 @@ import com.randrdevelopment.propertygroup.command.BaseCommand;
 
 public class CreateGroupCommand extends BaseCommand{
 	FileConfiguration propertyConfig;
+	private static PropertyGroup plugin;
 	
 	public CreateGroupCommand(PropertyGroup plugin) {
         super(plugin);
@@ -105,12 +106,31 @@ public class CreateGroupCommand extends BaseCommand{
     		return;
     	}
     	
-    	// Store the defaults into the configuration
-		propertyConfig.set(propertyGroup+".userteleport", false);
-		propertyConfig.set(propertyGroup+".propertyspacing", 10);
-		propertyConfig.set(propertyGroup+".createregion", false);
-		propertyConfig.set(propertyGroup+".assignhome", false);
-    	
+    	// Get default configuration from config.yml
+    	propertyConfig.set(propertyGroup+".userteleport", plugin.getConfig().get("PropertyGroupDefaults.userteleport"));
+    	propertyConfig.set(propertyGroup+".propertyspacing", plugin.getConfig().get("PropertyGroupDefaults.propertyspacing"));
+    	propertyConfig.set(propertyGroup+".createregion", plugin.getConfig().get("PropertyGroupDefaults.createregion"));
+   		propertyConfig.set(propertyGroup+".assignhome", plugin.getConfig().get("PropertyGroupDefaults.assignhome"));
+   		// Get default configuration for region flags from config.yml
+   		propertyConfig.set(propertyGroup+".pvp", plugin.getConfig().get("RegionFlagDefaults.pvp"));
+   		propertyConfig.set(propertyGroup+".mob-damage", plugin.getConfig().get("RegionFlagDefaults.mob-damage"));
+   		propertyConfig.set(propertyGroup+".mob-spawning", plugin.getConfig().get("RegionFlagDefaults.mob-spawning"));
+   		propertyConfig.set(propertyGroup+".creeper-explosion", plugin.getConfig().get("RegionFlagDefaults.creeper-explosion"));
+   		propertyConfig.set(propertyGroup+".ghast-fireball", plugin.getConfig().get("RegionFlagDefaults.ghast-fireball"));
+   		propertyConfig.set(propertyGroup+".tnt", plugin.getConfig().get("RegionFlagDefaults.tnt"));
+   		propertyConfig.set(propertyGroup+".lighter", plugin.getConfig().get("RegionFlagDefaults.lighter"));
+   		propertyConfig.set(propertyGroup+".fire-spread", plugin.getConfig().get("RegionFlagDefaults.fire-spread"));
+   		propertyConfig.set(propertyGroup+".lava-fire", plugin.getConfig().get("RegionFlagDefaults.lava-fire"));
+   		propertyConfig.set(propertyGroup+".lightning", plugin.getConfig().get("RegionFlagDefaults.lightning"));
+   		propertyConfig.set(propertyGroup+".chest-access", plugin.getConfig().get("RegionFlagDefaults.chest-access"));
+   		propertyConfig.set(propertyGroup+".water-flow", plugin.getConfig().get("RegionFlagDefaults.water-flow"));
+   		propertyConfig.set(propertyGroup+".lava-flow", plugin.getConfig().get("RegionFlagDefaults.lava-flow"));
+   		propertyConfig.set(propertyGroup+".use", plugin.getConfig().get("RegionFlagDefaults.use"));
+   		propertyConfig.set(propertyGroup+".leaf-decay", plugin.getConfig().get("RegionFlagDefaults.leaf-decay"));
+   		propertyConfig.set(propertyGroup+".greeting", plugin.getConfig().get("RegionFlagDefaults.greeting"));
+   		propertyConfig.set(propertyGroup+".greeting-noowner", plugin.getConfig().get("RegionFlagDefaults.greeting-noowner"));
+   		propertyConfig.set(propertyGroup+".farewell", plugin.getConfig().get("RegionFlagDefaults.farewell"));
+   		
     	// Save the configuration
     	plugin.savePropertyConfig();
     	
