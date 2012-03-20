@@ -75,6 +75,7 @@ public class PropertyGroup extends JavaPlugin {
 	
 	private void registerCommands() {
         commandManager = new CommandManager();
+        // Load Commands
         commandManager.addCommand(new CreatePropertyCommand(this));
         commandManager.addCommand(new ListGroupsCommand(this));
         commandManager.addCommand(new ReloadConfigCommand(this));
