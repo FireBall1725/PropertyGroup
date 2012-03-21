@@ -77,7 +77,7 @@ public class CreatePropertyCommand extends BaseCommand{
 					String playerName = null;
 					if (args[1].length() == 2)
 						playerName = args[1];
-					if (!RegionTools.createProtectedRegion(propertyGroup+"-"+row+"-"+col, worldname, x, x+width-1, 0, 255, z, z+length-1, 10, playerName))
+					if (!RegionTools.createProtectedRegion(propertyGroup+"-"+row+"-"+col, worldname, x, x+width-1, 0, 255, z, z+length-1, 10, playerName, propertyConfig, propertyGroup))
 						sender.sendMessage(plugin.getTag()+ChatColor.RED+"Error creating region...");
 				}
 				

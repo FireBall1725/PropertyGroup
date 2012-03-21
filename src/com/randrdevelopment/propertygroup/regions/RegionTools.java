@@ -2,6 +2,7 @@ package com.randrdevelopment.propertygroup.regions;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import com.randrdevelopment.propertygroup.PropertyGroup;
 import com.sk89q.worldedit.BlockVector;
@@ -24,7 +25,7 @@ public class RegionTools {
 		}
 	}
 	
-	private boolean createRegion(String regionName, World world, int x1, int x2, int y1, int y2, int z1, int z2, int Priority, String playerName){
+	private boolean createRegion(String regionName, World world, int x1, int x2, int y1, int y2, int z1, int z2, int Priority, String playerName, FileConfiguration propertyConfig, String propertyGroup){
 		RegionManager m = wgp.getRegionManager(world);
 		if (m == null)
 			return false;
@@ -34,11 +35,122 @@ public class RegionTools {
 		
         //com.sk89q.worldguard.protection.flags.DefaultFlag.GREET_MESSAGE
         ProtectedRegion region = new ProtectedCuboidRegion(regionName, min, max);
-
-        region.setFlag(DefaultFlag.GREET_MESSAGE, "Welcome to the Property");
-        region.setFlag(DefaultFlag.FAREWELL_MESSAGE, "Goodbye...");
-        region.setFlag(DefaultFlag.CHEST_ACCESS, State.DENY);
-        region.setFlag(DefaultFlag.MOB_DAMAGE, State.DENY);
+         
+        // Set pvp Flag
+   		if (propertyConfig.getBoolean(propertyGroup+".pvp"))
+   			region.setFlag(DefaultFlag.PVP, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.PVP, State.DENY);
+   		
+        // Set mob-damage Flag
+        if (propertyConfig.getBoolean(propertyGroup+".mob-damage"))
+        	region.setFlag(DefaultFlag.MOB_DAMAGE, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.MOB_DAMAGE, State.DENY);
+   		
+        // Set mob-spawning Flag
+        if (propertyConfig.getBoolean(propertyGroup+".mob-spawning"))
+        	region.setFlag(DefaultFlag.MOB_SPAWNING, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.MOB_SPAWNING, State.DENY);
+        
+        // Set creeper-explosion Flag
+        if (propertyConfig.getBoolean(propertyGroup+".creeper-explosion"))
+        	region.setFlag(DefaultFlag.CREEPER_EXPLOSION, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.CREEPER_EXPLOSION, State.DENY);
+        
+        // Set ghast-fireball Flag
+        if (propertyConfig.getBoolean(propertyGroup+".ghast-fireball"))
+        	region.setFlag(DefaultFlag.GHAST_FIREBALL, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.GHAST_FIREBALL, State.DENY);
+        
+        // Set tnt Flag
+        if (propertyConfig.getBoolean(propertyGroup+".tnt"))
+        	region.setFlag(DefaultFlag.TNT, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.TNT, State.DENY);
+        
+        // Set lighter Flag
+        if (propertyConfig.getBoolean(propertyGroup+".lighter"))
+        	region.setFlag(DefaultFlag.LIGHTER, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.LIGHTER, State.DENY);
+        
+        // Set fire-spread Flag
+        if (propertyConfig.getBoolean(propertyGroup+".fire-spread"))
+        	region.setFlag(DefaultFlag.FIRE_SPREAD, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.FIRE_SPREAD, State.DENY);
+        
+        // Set lava-fire Flag
+        if (propertyConfig.getBoolean(propertyGroup+".lava-fire"))
+        	region.setFlag(DefaultFlag.LAVA_FIRE, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.LAVA_FIRE, State.DENY);
+        
+        // Set lightning Flag
+        if (propertyConfig.getBoolean(propertyGroup+".lightning"))
+        	region.setFlag(DefaultFlag.LIGHTNING, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.LIGHTNING, State.DENY);
+        
+        // Set chest-access Flag
+        if (propertyConfig.getBoolean(propertyGroup+".chest-access"))
+        	region.setFlag(DefaultFlag.CHEST_ACCESS, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.CHEST_ACCESS, State.DENY);
+        
+        // Set water-flow Flag
+        if (propertyConfig.getBoolean(propertyGroup+".water-flow"))
+        	region.setFlag(DefaultFlag.WATER_FLOW, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.WATER_FLOW, State.DENY);
+        
+        // Set lava-flow Flag
+        if (propertyConfig.getBoolean(propertyGroup+".lava-flow"))
+        	region.setFlag(DefaultFlag.LAVA_FLOW, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.LAVA_FLOW, State.DENY);
+        
+        // Set use Flag
+        if (propertyConfig.getBoolean(propertyGroup+".use"))
+        	region.setFlag(DefaultFlag.USE, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.USE, State.DENY);
+        
+        // Set leaf-decay Flag
+        if (propertyConfig.getBoolean(propertyGroup+".leaf-decay"))
+        	region.setFlag(DefaultFlag.LEAF_DECAY, State.ALLOW);
+        else
+        	region.setFlag(DefaultFlag.LEAF_DECAY, State.DENY);
+        
+        // Set Greeting Message
+        if (playerName != null){
+        	String Greeting = propertyConfig.getString(propertyGroup+".greeting");
+        	Greeting = Greeting.replace("%PropertyName%", regionName);
+        	Greeting = Greeting.replace("%Owner%", playerName);
+        	region.setFlag(DefaultFlag.GREET_MESSAGE, Greeting);
+        } else {
+        	String Greeting = propertyConfig.getString(propertyGroup+".greeting-noowner");
+        	Greeting = Greeting.replace("%PropertyName%", regionName);
+        	Greeting = Greeting.replace("%Owner%", "");
+        	region.setFlag(DefaultFlag.GREET_MESSAGE, Greeting);
+        }
+        
+        // Set Farewell Message
+        if (playerName != null){
+        	String Farewell = propertyConfig.getString(propertyGroup+".farewell");
+        	Farewell = Farewell.replace("%PropertyName%", regionName);
+        	Farewell = Farewell.replace("%Owner%", playerName);
+        	region.setFlag(DefaultFlag.FAREWELL_MESSAGE, Farewell);
+        } else {
+        	String Farewell = propertyConfig.getString(propertyGroup+".farewell");
+        	Farewell = Farewell.replace("%PropertyName%", regionName);
+        	Farewell = Farewell.replace("%Owner%", "");
+        	region.setFlag(DefaultFlag.FAREWELL_MESSAGE, Farewell);
+        }
         
         if (playerName != null){
         	DefaultDomain owners = new DefaultDomain();
@@ -58,12 +170,12 @@ public class RegionTools {
 		}
 	}
 	
-	public static boolean createProtectedRegion(String regionName, String worldName, int x1, int x2, int y1, int y2, int z1, int z2, int Priority, String playerName){
+	public static boolean createProtectedRegion(String regionName, String worldName, int x1, int x2, int y1, int y2, int z1, int z2, int Priority, String playerName, FileConfiguration propertyConfig, String PropertyGroupName){
 		RegionTools rt = new RegionTools();
 		
 		World world = Bukkit.getWorld(worldName);
 		
-		if (rt.createRegion(regionName, world, x1, x2, y1, y2, z1, z2, Priority, playerName))
+		if (rt.createRegion(regionName, world, x1, x2, y1, y2, z1, z2, Priority, playerName, propertyConfig, PropertyGroupName))
 			return true;
 		
 		return false;
