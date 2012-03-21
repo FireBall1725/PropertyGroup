@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project name="PropertyGroup" default="dist" basedir=".">
+	<setloglevel level="debug"/>
 	<property name="pluginname" value="PropertyGroup"/>
 	
 	<property name="src" location="src"/>
