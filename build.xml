@@ -15,8 +15,8 @@
 		<javac srcdir="${src}" destdir="${bin}" includeantruntime="false" verbose="true">
 			<classpath>
 				<pathelement location="api/bukkit-1.2.2-R0.1-20120302.133818-8.jar"/>
-        			<pathelement location="api/worldedit-5.3.jar"/>
-        			<pathelement location="api/WorldGuard.jar"/>
+				<pathelement location="api/worldedit-5.3.jar"/>
+				<pathelement location="api/WorldGuard.jar"/>
 			</classpath>
 		</javac>
 	</target>
