@@ -22,7 +22,7 @@
 
 	<target name="dist" depends="compile">
 		<mkdir dir="${dist}"/>
-		<jar jarfile="${dist}/${pluginname}.jar">
+		<jar verbose="true" jarfile="${dist}/${pluginname}.jar">
 			<fileset dir="${bin}"/>
 			<fileset file="plugin.yml"/>
 			<fileset file="config.yml"/>
@@ -30,11 +30,10 @@
 	</target>
 
 	<target name="deploy" depends="dist">
-		<copy file="${dist}/${pluginname}.jar" todir="${plugins}"/>
+		<copy verbose="true" file="${dist}/${pluginname}.jar" todir="${plugins}"/>
 	</target>
 
-	<target name="clean">
-		<delete dir="${bin}"/>
-		<delete dir="${dist}"/>
+	<target name="clean" depends="deploy">
+		<delete verbose="true" dir="${bin}"/>
 	</target>
 </project>
