@@ -25,7 +25,7 @@ public class RegionTools {
 		}
 	}
 	
-	private boolean createRegion(String regionName, World world, int x1, int x2, int y1, int y2, int z1, int z2, int Priority, String playerName, FileConfiguration propertyConfig, String propertyGroup){
+	private boolean createRegion(String regionName, World world, int x1, int x2, int y1, int y2, int z1, int z2, String playerName, FileConfiguration propertyConfig, String propertyGroup){
 		RegionManager m = wgp.getRegionManager(world);
 		if (m == null)
 			return false;
@@ -152,12 +152,18 @@ public class RegionTools {
         	region.setFlag(DefaultFlag.FAREWELL_MESSAGE, Farewell);
         }
         
+        // Set Owner (if player name is set)
         if (playerName != null){
         	DefaultDomain owners = new DefaultDomain();
         	owners.addPlayer(playerName);
         	region.setOwners(owners);
         }
         
+        // Set region priority
+        int Priority = propertyConfig.getInt(propertyGroup+".priority");
+        region.setPriority(Priority);
+        
+        // Save Region
         RegionManager regionManager = wgp.getRegionManager(world);
         regionManager.addRegion(region);
         
@@ -170,12 +176,12 @@ public class RegionTools {
 		}
 	}
 	
-	public static boolean createProtectedRegion(String regionName, String worldName, int x1, int x2, int y1, int y2, int z1, int z2, int Priority, String playerName, FileConfiguration propertyConfig, String PropertyGroupName){
+	public static boolean createProtectedRegion(String regionName, String worldName, int x1, int x2, int y1, int y2, int z1, int z2, String playerName, FileConfiguration propertyConfig, String PropertyGroupName){
 		RegionTools rt = new RegionTools();
 		
 		World world = Bukkit.getWorld(worldName);
 		
-		if (rt.createRegion(regionName, world, x1, x2, y1, y2, z1, z2, Priority, playerName, propertyConfig, PropertyGroupName))
+		if (rt.createRegion(regionName, world, x1, x2, y1, y2, z1, z2, playerName, propertyConfig, PropertyGroupName))
 			return true;
 		
 		return false;

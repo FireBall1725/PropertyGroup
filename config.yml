@@ -26,7 +26,9 @@ RegionFlagDefaults:
     lava-flow: true          # Allow lava to flow on property (default: true)
     use: true                # Allow guests to property to use buttons, levers (default: true)
     leaf-decay: true         # Allow leaves to decay (default: true)
-    
+
+    priority: 10             # Default priority level for new properties
+
     # Region Greetings / Farewell Messages
     # Valid tags are %PropertyName% for the property name and %Owner% for the owners name.
     greeting: Welcome to %PropertyName%. Owned by %Owner%

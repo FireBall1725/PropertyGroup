@@ -129,6 +129,7 @@ public class CreateGroupCommand extends BaseCommand{
    		propertyConfig.set(propertyGroup+".greeting", plugin.getConfig().get("RegionFlagDefaults.greeting"));
    		propertyConfig.set(propertyGroup+".greeting-noowner", plugin.getConfig().get("RegionFlagDefaults.greeting-noowner"));
    		propertyConfig.set(propertyGroup+".farewell", plugin.getConfig().get("RegionFlagDefaults.farewell"));
+   		propertyConfig.set(propertyGroup+".priority", plugin.getConfig().get("RegionFlagDefaults.priority"));
    		
     	// Save the configuration
     	plugin.savePropertyConfig();
