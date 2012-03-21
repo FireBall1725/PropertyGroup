@@ -22,7 +22,7 @@
 
 	<target name="dist" depends="compile">
 		<mkdir dir="${dist}"/>
-		<jar verbose="true" jarfile="${dist}/${pluginname}.jar">
+		<jar jarfile="${dist}/${pluginname}.jar">
 			<fileset dir="${bin}"/>
 			<fileset file="plugin.yml"/>
 			<fileset file="config.yml"/>
