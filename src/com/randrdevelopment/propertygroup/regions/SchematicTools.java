@@ -3,6 +3,7 @@ package com.randrdevelopment.propertygroup.regions;
 import java.io.File;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 
 import com.randrdevelopment.propertygroup.log.PropertyGroupLogger;
@@ -67,7 +68,22 @@ public class SchematicTools {
 		try {
 			SchematicTools st = new SchematicTools();
 			if (st.loadSchematicFile(FileName)) {
-				if (restored = st.placeSchematic(blocks, x, y, z, worldname)) {
+				if (st.placeSchematic(blocks, x, y, z, worldname)) {
+					restored = true;
+				}
+			}
+		} catch (Exception e) {
+			restored = false;
+		}
+		return restored;
+	}
+	
+	public static boolean reload(String FileName, Location location, int blocks) {
+		boolean restored = false;
+		try {
+			SchematicTools st = new SchematicTools();
+			if (st.loadSchematicFile(FileName)) {
+				if (st.placeSchematic(blocks, (int)location.getX(), (int)location.getY(), (int)location.getZ(), location.getWorld().getName())) {
 					restored = true;
 				}
 			}

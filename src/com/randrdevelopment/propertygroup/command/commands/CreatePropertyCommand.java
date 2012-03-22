@@ -76,6 +76,8 @@ public class CreatePropertyCommand extends BaseCommand{
 					
 				SchematicTools.reload(propertyGroup, worldname, x, y, z, blocks);
 				
+				sender.sendMessage(plugin.getTag()+"Created Property");
+				
 				// Get target player name
 				String playerName = null;
 				if (args.length == 2)
@@ -83,8 +85,10 @@ public class CreatePropertyCommand extends BaseCommand{
 				
 				// Create Region if configured to do so...
 				if (propertyConfig.getBoolean(propertyGroup+".createregion")) {	
-					if (!RegionTools.createProtectedRegion(propertyGroup+"-"+row+"-"+col, worldname, x, x+width-1, 0, 255, z, z+length-1, playerName, propertyConfig, propertyGroup))
-						sender.sendMessage(plugin.getTag()+ChatColor.RED+"Error creating region...");
+					if (!RegionTools.createProtectedRegion(propertyGroup+"-"+i, worldname, x, x+width-1, 0, 255, z, z+length-1, playerName, propertyConfig, propertyGroup))
+						sender.sendMessage(ChatColor.RED+"Error creating region...");
+					else
+						sender.sendMessage(ChatColor.AQUA+"Created worldguard region: "+propertyGroup+"-"+i);
 				}
 				
 				// Teleport User if configured to do so...
@@ -93,12 +97,12 @@ public class CreatePropertyCommand extends BaseCommand{
 						// Validate user is online...
 						Player targetPlayer = Bukkit.getServer().getPlayer(playerName);
 				        if (targetPlayer == null) {
-				        	sender.sendMessage(plugin.getTag()+ChatColor.RED + playerName + " is not online! Unable to teleport.");
+				        	sender.sendMessage(ChatColor.RED+playerName+" is not online! Unable to teleport.");
 				        } else {
 				        	World world = Bukkit.getWorld(worldname);
 				        	Location tpLocation = new Location(world, x, y, z);
 				        	targetPlayer.teleport(tpLocation);
-				        	sender.sendMessage(plugin.getTag()+playerName + " teleported to new property.");
+				        	sender.sendMessage(ChatColor.AQUA+playerName+" teleported to new property.");
 				        }
 					}
 				}
@@ -112,8 +116,6 @@ public class CreatePropertyCommand extends BaseCommand{
 		
 		if (noproperties){
 			sender.sendMessage(plugin.getTag()+ChatColor.RED+"Property Group '"+propertyGroup+"' is full.");
-		} else {
-			sender.sendMessage(plugin.getTag()+"Property Created");
 		}
     }
 }
