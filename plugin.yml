@@ -13,7 +13,8 @@ permissions:
         description: Gives access to all property group commands
         children:
             propertygroup.create: true
-            propertygroup.reload: true            
+            propertygroup.reload: true    
+            propertygroup.createproperty: true        
 
     propertygroup.create:
         description: Allows you to create a property group
@@ -21,4 +22,8 @@ permissions:
 
     propertygroup.reload:
         description: Reload the configuration files
+        default: op
+        
+    propertygroup.createproperty:
+        description: Allows the user to create a property
         default: op

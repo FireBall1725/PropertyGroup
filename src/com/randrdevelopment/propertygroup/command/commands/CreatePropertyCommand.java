@@ -32,7 +32,7 @@ public class CreatePropertyCommand extends BaseCommand{
     	String propertyGroup = args[0].toLowerCase();
     	
     	// Validate permissions level
-    	if (!sender.hasPermission("propertygroup.create"))
+    	if (!sender.hasPermission("propertygroup.createproperty"))
     	{
     		sender.sendMessage(plugin.getTag() + ChatColor.RED + "You do not have permission to use this command");
     		return;
