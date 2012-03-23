@@ -177,11 +177,11 @@ public class PropertyGroup extends JavaPlugin {
 	public void savePropertyConfig() {
 	    if (propertyConfig == null || propertyConfigFile == null) {
 	        return;
-	        }
-	        try {
-	        	propertyConfig.save(propertyConfigFile);
-	        } catch (IOException ex) {
-	            Logger.getLogger(JavaPlugin.class.getName()).log(Level.SEVERE, "Could not save config to " + propertyConfigFile, ex);
-	        }
+	    }
+	    try {
+	    	propertyConfig.save(propertyConfigFile);
+	    } catch (IOException ex) {
+	        Logger.getLogger(JavaPlugin.class.getName()).log(Level.SEVERE, "Could not save config to " + propertyConfigFile, ex);
+	    }
 	}
 }
