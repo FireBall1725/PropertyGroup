@@ -25,26 +25,6 @@
         <isset property="label"/>
     </condition>
 	
-    <!-- Substring script -->
-    <scriptdef name="substring" language="javascript">
-        <attribute name="text"/>
-        <attribute name="start"/>
-        <attribute name="end"/>
-        <attribute name="property"/>
-
-        <![CDATA[
-                var text = attributes.get("text");
-                var start = attributes.get("start") || 0;
-                var end = attributes.get("end") || text.length();
-
-                if (end > text.length()) {
-                    end = text.length()
-                }
-
-                project.setProperty(attributes.get("property"), text.substring(start, end));
-            ]]>
-    </scriptdef>
-	
 	<target name="init">
 		<delete dir="${bin}"/>
 		<mkdir dir="${bin}"/>
@@ -53,12 +33,9 @@
 	<target name="compile" depends="init">
         <!-- Load the version -->
         <loadfile srcfile="VERSION" property="VERSION"/>
-
-        <!-- Trim the git commit -->
-        <substring text="${GIT_COMMIT_FULL}" start="0" end="8" property="GIT_COMMIT"/>
-
+		
         <!-- Replace ${VERSION} with the version number in plugin.yml -->
-        <replace file="${bin}/plugin.yml" value="${VERSION} (b${BUILD_NUMBER}-git-${GIT_COMMIT})">
+        <replace file="${bin}/plugin.yml" value="${VERSION} (b${BUILD_NUMBER}-git-${GIT_COMMIT_FULL})">
             <replacefilter token="@VERSION@"/>
         </replace>
 		
