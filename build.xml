@@ -35,7 +35,7 @@
         <loadfile srcfile="VERSION" property="VERSION"/>
 		
         <!-- Replace ${VERSION} with the version number in plugin.yml -->
-        <replace file="${bin}/plugin.yml" value="${VERSION} (b${BUILD_NUMBER}-git-${GIT_COMMIT_FULL})">
+        <replace file="plugin.yml" value="${VERSION} (b${BUILD_NUMBER}-git-${GIT_COMMIT_FULL})">
             <replacefilter token="@VERSION@"/>
         </replace>
 		
