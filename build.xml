@@ -60,7 +60,7 @@
 			<manifest>
 				<attribute name="Implementation-Title" value="PropertyGroup"/>
 			    <attribute name="Implementation-Vendor" value="FireBall1725"/>
-				<attribute name="Implementation-Version" value="b${BUILD_NUMBER}-git-${GIT_COMMIT}"/>
+				<attribute name="Implementation-Version" value="b${BUILD_NUMBER}-git-${GIT_COMMIT_FULL}"/>
 			</manifest>
 		</jar>
 	</target>
