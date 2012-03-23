@@ -56,6 +56,12 @@
 			<fileset dir="${bin}"/>
 			<fileset file="plugin.yml"/>
 			<fileset file="config.yml"/>
+			
+			<manifest>
+				<attribute name="Implementation-Title" value="PropertyGroup"/>
+			    <attribute name="Implementation-Vendor" value="FireBall1725"/>
+				<attribute name="Implementation-Version" value="b${BUILD_NUMBER}-git-${GIT_COMMIT}"/>
+			</manifest>
 		</jar>
 	</target>
 
