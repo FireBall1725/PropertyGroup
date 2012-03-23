@@ -2,24 +2,73 @@
 <project name="PropertyGroup" default="dist" basedir=".">
 	<property name="pluginname" value="PropertyGroup"/>
 	
-	<property name="src" location="src"/>
-	<property name="bin" location="bin"/>
-	<property name="dist" location="dist"/>
+	<property name="src" value="src"/>
+	<property name="bin" value="bin"/>
+	<property name="dist" value="dist"/>
+	<property name="api" value="api"/>
+	
+    <!-- Libraries -->
+    <fileset dir="${api}" id="api">
+        <include name="*.jar"/>
+    </fileset>
 
+    <!-- Jenkins integration -->
+    <property environment="env"/>
+
+    <condition property="BUILD_NUMBER" value="${env.BUILD_NUMBER}" else="MANUAL">
+        <isset property="env.BUILD_NUMBER"/>
+    </condition>
+    <condition property="GIT_COMMIT_FULL" value="${env.GIT_COMMIT}" else="MANUAL">
+        <isset property="env.GIT_COMMIT"/>
+    </condition>
+    <condition property="label" value="${label}" else="Compiling ${pluginname}">
+        <isset property="label"/>
+    </condition>
+	
+    <!-- Substring script -->
+    <scriptdef name="substring" language="javascript">
+        <attribute name="text"/>
+        <attribute name="start"/>
+        <attribute name="end"/>
+        <attribute name="property"/>
+
+        <![CDATA[
+                var text = attributes.get("text");
+                var start = attributes.get("start") || 0;
+                var end = attributes.get("end") || text.length();
+
+                if (end > text.length()) {
+                    end = text.length()
+                }
+
+                project.setProperty(attributes.get("property"), text.substring(start, end));
+            ]]>
+    </scriptdef>
+	
 	<target name="init">
 		<delete dir="${bin}"/>
 		<mkdir dir="${bin}"/>
 	</target>
 
 	<target name="compile" depends="init">
+        <!-- Load the version -->
+        <loadfile srcfile="VERSION" property="VERSION"/>
+
+        <!-- Trim the git commit -->
+        <substring text="${GIT_COMMIT_FULL}" start="0" end="8" property="GIT_COMMIT"/>
+
+        <!-- Replace ${VERSION} with the version number in plugin.yml -->
+        <replace file="${bin}/plugin.yml" value="${VERSION} (b${BUILD_NUMBER}-git-${GIT_COMMIT})">
+            <replacefilter token="@VERSION@"/>
+        </replace>
+		
+		<echo>${label}</echo>
         <javac source="1.6" target="1.6" srcdir="${src}" destdir="${bin}"
                debug="true" debuglevel="lines,vars,source" deprecation="true" 
         	   includeantruntime="true" verbose="true">
             <compilerarg value="-Xlint:-options"/>
             <classpath>
-            	<pathelement location="api/bukkit-1.2.3-R0.3-20120321.060153-16.jar"/>
-            	<pathelement location="api/worldedit-5.3.jar"/>
-            	<pathelement location="api/WorldGuard.jar"/>
+            	<fileset refid="api"/>
             </classpath>
         </javac>
 	</target>
