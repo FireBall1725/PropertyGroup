@@ -2,13 +2,13 @@ package com.randrdevelopment.propertygroup.command.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 
 import com.randrdevelopment.propertygroup.command.BaseCommand;
 import com.randrdevelopment.propertygroup.PropertyGroup;
+import com.randrdevelopment.propertygroup.PropertyGroupConfig;
 
 public class ListGroupsCommand extends BaseCommand {
-	FileConfiguration propertyConfig;
+	private PropertyGroupConfig propertyConfig = null;
 	
 	public ListGroupsCommand(PropertyGroup plugin) {
         super(plugin);
