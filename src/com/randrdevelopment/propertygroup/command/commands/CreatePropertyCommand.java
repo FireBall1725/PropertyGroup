@@ -109,6 +109,7 @@ public class CreatePropertyCommand extends BaseCommand{
 				}
 				
 				propertyConfig.set(propertyGroup+".properties."+i+".created", true);
+				propertyConfig.set(propertyGroup+".properties."+i+".owner", playerName);
 				propertyConfig.save();
 					
 				break;
