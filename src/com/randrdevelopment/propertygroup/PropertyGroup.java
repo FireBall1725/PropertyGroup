@@ -1,17 +1,12 @@
 package com.randrdevelopment.propertygroup;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,11 +33,12 @@ public class PropertyGroup extends JavaPlugin {
 	private static WorldGuardPlugin pluginWorldGuard;
 	private static PropertyGroup instance;
 	private CommandManager commandManager;
-	private FileConfiguration propertyConfig = null;
 	private File propertyConfigFile = null;
 	private File defaultConfigFile = null;
 	private String propertyGroup = null;
 	private Set<int[]> blocks = null;
+	private PropertyGroupConfig defaultConfig = null;
+	private PropertyGroupConfig propertyConfig = null;
 	
 	public void onEnable(){ 
 		instance = this;
@@ -72,13 +68,21 @@ public class PropertyGroup extends JavaPlugin {
     	propertyConfigFile = new File(getDataFolder(), "propertygroups.yml");
     	
     	// Setup default configuration
-    	PropertyGroupConfig defaultConfig = new PropertyGroupConfig(defaultConfigFile);
+    	defaultConfig = new PropertyGroupConfig(defaultConfigFile);
     	defaultConfig.setTemplateName("/config.yml", PropertyGroup.class);
     	defaultConfig.load();
 		
 		// Setup property groups configuration
-    	PropertyGroupConfig propertyConfig = new PropertyGroupConfig(propertyConfigFile);
+    	propertyConfig = new PropertyGroupConfig(propertyConfigFile);
     	propertyConfig.load();
+    }
+    
+    public PropertyGroupConfig getDefaultConfig(){
+    	return defaultConfig;
+    }
+    
+    public PropertyGroupConfig getPropertyConfig(){
+    	return propertyConfig;
     }
     
 	private void loadEssentials(){
@@ -160,37 +164,5 @@ public class PropertyGroup extends JavaPlugin {
 	
 	public Set<int[]> getBlockData() {
 		return blocks;
-	}
-	
-	public FileConfiguration getPropertyConfig() {
-	    if (propertyConfig == null) {
-	        reloadPropertyConfig();
-	    }
-	    return propertyConfig;
-	}
-	
-	public void reloadPropertyConfig() {
-	    if (propertyConfigFile == null) {
-	    	propertyConfigFile = new File(getDataFolder(), "propertygroups.yml");
-	    }
-	    propertyConfig = YamlConfiguration.loadConfiguration(propertyConfigFile);
-	     
-	    // Look for defaults in the jar
-	    InputStream defConfigStream = getResource("propertygroups.yml");
-	    if (defConfigStream != null) {
-	    	YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-	    	propertyConfig.setDefaults(defConfig);
-	    }
-	}
-	
-	public void savePropertyConfig() {
-	    if (propertyConfig == null || propertyConfigFile == null) {
-	        return;
-	    }
-	    try {
-	    	propertyConfig.save(propertyConfigFile);
-	    } catch (IOException ex) {
-	        Logger.getLogger(JavaPlugin.class.getName()).log(Level.SEVERE, "Could not save config to " + propertyConfigFile, ex);
-	    }
 	}
 }

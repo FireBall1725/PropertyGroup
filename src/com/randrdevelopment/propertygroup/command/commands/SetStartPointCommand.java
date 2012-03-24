@@ -9,9 +9,10 @@ import org.bukkit.entity.Player;
 
 import com.randrdevelopment.propertygroup.command.BaseCommand;
 import com.randrdevelopment.propertygroup.PropertyGroup;
+import com.randrdevelopment.propertygroup.PropertyGroupConfig;
 
 public class SetStartPointCommand extends BaseCommand{
-	FileConfiguration propertyConfig;
+	private PropertyGroupConfig propertyConfig = null;
 
 	public SetStartPointCommand(PropertyGroup plugin) {
         super(plugin);
@@ -64,7 +65,7 @@ public class SetStartPointCommand extends BaseCommand{
 		propertyConfig.set(propertyGroup+".startlocation.z", loc.getBlockZ());
 		propertyConfig.set(propertyGroup+".startlocation.world", worldName);
 	    			
-		plugin.savePropertyConfig();
+		propertyConfig.save();
 	    			
 		sender.sendMessage(plugin.getTag()+"Start Point set for property group '"+propertyGroup+"'");
     }	    		

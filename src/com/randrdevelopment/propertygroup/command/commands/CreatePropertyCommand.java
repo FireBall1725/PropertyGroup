@@ -10,11 +10,12 @@ import org.bukkit.entity.Player;
 
 import com.randrdevelopment.propertygroup.command.BaseCommand;
 import com.randrdevelopment.propertygroup.PropertyGroup;
+import com.randrdevelopment.propertygroup.PropertyGroupConfig;
 import com.randrdevelopment.propertygroup.regions.RegionTools;
 import com.randrdevelopment.propertygroup.regions.SchematicTools;
 
 public class CreatePropertyCommand extends BaseCommand{
-	FileConfiguration propertyConfig;
+	private PropertyGroupConfig propertyConfig = null;
 	
 	public CreatePropertyCommand(PropertyGroup plugin) {
         super(plugin);
@@ -108,7 +109,7 @@ public class CreatePropertyCommand extends BaseCommand{
 				}
 				
 				propertyConfig.set(propertyGroup+".properties."+i+".created", true);
-				plugin.savePropertyConfig();
+				propertyConfig.save();
 					
 				break;
 			}

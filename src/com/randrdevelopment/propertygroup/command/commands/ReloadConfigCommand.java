@@ -5,8 +5,12 @@ import org.bukkit.command.CommandSender;
 
 import com.randrdevelopment.propertygroup.command.BaseCommand;
 import com.randrdevelopment.propertygroup.PropertyGroup;
+import com.randrdevelopment.propertygroup.PropertyGroupConfig;
 
 public class ReloadConfigCommand extends BaseCommand{
+	private PropertyGroupConfig defaultConfig = null;
+	private PropertyGroupConfig propertyConfig = null;
+	
 	public ReloadConfigCommand(PropertyGroup plugin) {
         super(plugin);
         name = "Reload";
@@ -19,6 +23,9 @@ public class ReloadConfigCommand extends BaseCommand{
 	
     @Override
     public void execute(CommandSender sender, String[] args) {
+    	propertyConfig = plugin.getPropertyConfig();
+    	defaultConfig = plugin.getDefaultConfig();
+    	
     	// Validate permissions level
     	if (!sender.hasPermission("propertygroup.reload"))
     	{
@@ -27,8 +34,8 @@ public class ReloadConfigCommand extends BaseCommand{
     	}
     	
     	// Reload configuration file.
-    	plugin.reloadPropertyConfig();
-    	plugin.reloadConfig();
+    	defaultConfig.load();
+    	propertyConfig.load();
     	sender.sendMessage(plugin.getTag() + "Configuration Reloaded");
     }
 }

@@ -5,10 +5,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.randrdevelopment.propertygroup.PropertyGroup;
+import com.randrdevelopment.propertygroup.PropertyGroupConfig;
 import com.randrdevelopment.propertygroup.command.BaseCommand;
 
 public class SetCommand extends BaseCommand{
-	FileConfiguration propertyConfig;
+	private PropertyGroupConfig propertyConfig = null;
 	
 	public SetCommand(PropertyGroup plugin) {
         super(plugin);
@@ -50,7 +51,7 @@ public class SetCommand extends BaseCommand{
     			if (spacing >= 0){
     				propertyConfig.set(propertyGroup+".propertyspacing", spacing);
     				sender.sendMessage(plugin.getTag() + "Spacing set to " + spacing);
-    				plugin.savePropertyConfig();
+    				propertyConfig.save();
     			} else {
     				sender.sendMessage(plugin.getTag() + ChatColor.RED + "Property spacing cannot be a negative number.");
     			}
@@ -62,11 +63,11 @@ public class SetCommand extends BaseCommand{
     		if (setValue.equalsIgnoreCase("true")){
     			propertyConfig.set(propertyGroup+".createregion", true);
     			sender.sendMessage(plugin.getTag() + "Create Region Enabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else if (setValue.equalsIgnoreCase("false")){
     			propertyConfig.set(propertyGroup+".createregion", false);
     			sender.sendMessage(plugin.getTag() + "Create Region Disabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else {
     			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Invalid option for 'createregion'.  Valid options are True and False");
     		}
@@ -75,11 +76,11 @@ public class SetCommand extends BaseCommand{
     		if (setValue.equalsIgnoreCase("true")){
     			propertyConfig.set(propertyGroup+".userteleport", true);
     			sender.sendMessage(plugin.getTag() + "User Teleport Enabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else if (setValue.equalsIgnoreCase("false")){
     			propertyConfig.set(propertyGroup+".userteleport", false);
     			sender.sendMessage(plugin.getTag() + "User Teleport Disabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else {
     			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Invalid option for 'userteleport'.  Valid options are True and False");
     		}
@@ -88,11 +89,11 @@ public class SetCommand extends BaseCommand{
     		if (setValue.equalsIgnoreCase("true")){
     			propertyConfig.set(propertyGroup+".assignhome", true);
     			sender.sendMessage(plugin.getTag() + "Assign Home Enabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else if (setValue.equalsIgnoreCase("false")){
     			propertyConfig.set(propertyGroup+".assignhome", false);
     			sender.sendMessage(plugin.getTag() + "Assign Home Disabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else {
     			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Invalid option for 'assignhome'.  Valid options are True and False");
     		}
@@ -101,11 +102,11 @@ public class SetCommand extends BaseCommand{
     		if (setValue.equalsIgnoreCase("true")){
     			propertyConfig.set(propertyGroup+".pvp", true);
     			sender.sendMessage(plugin.getTag() + "Region Flag PVP Enabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else if (setValue.equalsIgnoreCase("false")){
     			propertyConfig.set(propertyGroup+".pvp", false);
     			sender.sendMessage(plugin.getTag() + "Region Flag PVP Disabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else {
     			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Invalid option for 'pvp'.  Valid options are True and False");
     		}
@@ -114,11 +115,11 @@ public class SetCommand extends BaseCommand{
     		if (setValue.equalsIgnoreCase("true")){
     			propertyConfig.set(propertyGroup+".mob-damage", true);
     			sender.sendMessage(plugin.getTag() + "Region Flag Mob-Damage Enabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else if (setValue.equalsIgnoreCase("false")){
     			propertyConfig.set(propertyGroup+".mob-damage", false);
     			sender.sendMessage(plugin.getTag() + "Region Flag Mob-Damage Disabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else {
     			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Invalid option for 'mob-damage'.  Valid options are True and False");
     		}
@@ -127,11 +128,11 @@ public class SetCommand extends BaseCommand{
     		if (setValue.equalsIgnoreCase("true")){
     			propertyConfig.set(propertyGroup+".mob-spawning", true);
     			sender.sendMessage(plugin.getTag() + "Region Flag Mob-Spawning Enabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else if (setValue.equalsIgnoreCase("false")){
     			propertyConfig.set(propertyGroup+".mob-spawning", false);
     			sender.sendMessage(plugin.getTag() + "Region Flag Mob-Spawning Disabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else {
     			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Invalid option for 'mob-spawning'.  Valid options are True and False");
     		}
@@ -140,11 +141,11 @@ public class SetCommand extends BaseCommand{
     		if (setValue.equalsIgnoreCase("true")){
     			propertyConfig.set(propertyGroup+".creeper-explosion", true);
     			sender.sendMessage(plugin.getTag() + "Region Flag Creeper-Explosion Enabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else if (setValue.equalsIgnoreCase("false")){
     			propertyConfig.set(propertyGroup+".creeper-explosion", false);
     			sender.sendMessage(plugin.getTag() + "Region Flag Creeper-Explosion Disabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else {
     			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Invalid option for 'creeper-explosion'.  Valid options are True and False");
     		}
@@ -153,11 +154,11 @@ public class SetCommand extends BaseCommand{
     		if (setValue.equalsIgnoreCase("true")){
     			propertyConfig.set(propertyGroup+".ghast-fireball", true);
     			sender.sendMessage(plugin.getTag() + "Region Flag Ghast Fireball Enabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else if (setValue.equalsIgnoreCase("false")){
     			propertyConfig.set(propertyGroup+".ghast-fireball", false);
     			sender.sendMessage(plugin.getTag() + "Region Flag Ghast Fireball Disabled");
-    			plugin.savePropertyConfig();
+    			propertyConfig.save();
     		} else {
     			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Invalid option for 'ghast-fireball'.  Valid options are True and False");
     		}

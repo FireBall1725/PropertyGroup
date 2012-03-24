@@ -14,10 +14,12 @@ import org.jnbt.ShortTag;
 import org.jnbt.Tag;
 
 import com.randrdevelopment.propertygroup.PropertyGroup;
+import com.randrdevelopment.propertygroup.PropertyGroupConfig;
 import com.randrdevelopment.propertygroup.command.BaseCommand;
 
 public class CreateGroupCommand extends BaseCommand{
-	FileConfiguration propertyConfig;
+	private PropertyGroupConfig defaultConfig = null;
+	private PropertyGroupConfig propertyConfig = null;
 	
 	public CreateGroupCommand(PropertyGroup plugin) {
         super(plugin);
@@ -32,6 +34,7 @@ public class CreateGroupCommand extends BaseCommand{
     @Override
     public void execute(CommandSender sender, String[] args) {
     	propertyConfig = plugin.getPropertyConfig();
+    	defaultConfig = plugin.getDefaultConfig();
     	String propertyGroup = args[0].toLowerCase();
     	
     	Player player = null;
@@ -106,33 +109,33 @@ public class CreateGroupCommand extends BaseCommand{
     	}
     	
     	// Get default configuration from config.yml
-    	propertyConfig.set(propertyGroup+".userteleport", plugin.getConfig().get("PropertyGroupDefaults.userteleport"));
-    	propertyConfig.set(propertyGroup+".propertyspacing", plugin.getConfig().get("PropertyGroupDefaults.propertyspacing"));
-    	propertyConfig.set(propertyGroup+".createregion", plugin.getConfig().get("PropertyGroupDefaults.createregion"));
-   		propertyConfig.set(propertyGroup+".assignhome", plugin.getConfig().get("PropertyGroupDefaults.assignhome"));
+    	propertyConfig.set(propertyGroup+".userteleport", defaultConfig.get("PropertyGroupDefaults.userteleport"));
+    	propertyConfig.set(propertyGroup+".propertyspacing", defaultConfig.get("PropertyGroupDefaults.propertyspacing"));
+    	propertyConfig.set(propertyGroup+".createregion", defaultConfig.get("PropertyGroupDefaults.createregion"));
+   		propertyConfig.set(propertyGroup+".assignhome", defaultConfig.get("PropertyGroupDefaults.assignhome"));
    		// Get default configuration for region flags from config.yml
-   		propertyConfig.set(propertyGroup+".pvp", plugin.getConfig().get("RegionFlagDefaults.pvp"));
-   		propertyConfig.set(propertyGroup+".mob-damage", plugin.getConfig().get("RegionFlagDefaults.mob-damage"));
-   		propertyConfig.set(propertyGroup+".mob-spawning", plugin.getConfig().get("RegionFlagDefaults.mob-spawning"));
-   		propertyConfig.set(propertyGroup+".creeper-explosion", plugin.getConfig().get("RegionFlagDefaults.creeper-explosion"));
-   		propertyConfig.set(propertyGroup+".ghast-fireball", plugin.getConfig().get("RegionFlagDefaults.ghast-fireball"));
-   		propertyConfig.set(propertyGroup+".tnt", plugin.getConfig().get("RegionFlagDefaults.tnt"));
-   		propertyConfig.set(propertyGroup+".lighter", plugin.getConfig().get("RegionFlagDefaults.lighter"));
-   		propertyConfig.set(propertyGroup+".fire-spread", plugin.getConfig().get("RegionFlagDefaults.fire-spread"));
-   		propertyConfig.set(propertyGroup+".lava-fire", plugin.getConfig().get("RegionFlagDefaults.lava-fire"));
-   		propertyConfig.set(propertyGroup+".lightning", plugin.getConfig().get("RegionFlagDefaults.lightning"));
-   		propertyConfig.set(propertyGroup+".chest-access", plugin.getConfig().get("RegionFlagDefaults.chest-access"));
-   		propertyConfig.set(propertyGroup+".water-flow", plugin.getConfig().get("RegionFlagDefaults.water-flow"));
-   		propertyConfig.set(propertyGroup+".lava-flow", plugin.getConfig().get("RegionFlagDefaults.lava-flow"));
-   		propertyConfig.set(propertyGroup+".use", plugin.getConfig().get("RegionFlagDefaults.use"));
-   		propertyConfig.set(propertyGroup+".leaf-decay", plugin.getConfig().get("RegionFlagDefaults.leaf-decay"));
-   		propertyConfig.set(propertyGroup+".greeting", plugin.getConfig().get("RegionFlagDefaults.greeting"));
-   		propertyConfig.set(propertyGroup+".greeting-noowner", plugin.getConfig().get("RegionFlagDefaults.greeting-noowner"));
-   		propertyConfig.set(propertyGroup+".farewell", plugin.getConfig().get("RegionFlagDefaults.farewell"));
-   		propertyConfig.set(propertyGroup+".priority", plugin.getConfig().get("RegionFlagDefaults.priority"));
+   		propertyConfig.set(propertyGroup+".pvp", defaultConfig.get("RegionFlagDefaults.pvp"));
+   		propertyConfig.set(propertyGroup+".mob-damage", defaultConfig.get("RegionFlagDefaults.mob-damage"));
+   		propertyConfig.set(propertyGroup+".mob-spawning", defaultConfig.get("RegionFlagDefaults.mob-spawning"));
+   		propertyConfig.set(propertyGroup+".creeper-explosion", defaultConfig.get("RegionFlagDefaults.creeper-explosion"));
+   		propertyConfig.set(propertyGroup+".ghast-fireball", defaultConfig.get("RegionFlagDefaults.ghast-fireball"));
+   		propertyConfig.set(propertyGroup+".tnt", defaultConfig.get("RegionFlagDefaults.tnt"));
+   		propertyConfig.set(propertyGroup+".lighter", defaultConfig.get("RegionFlagDefaults.lighter"));
+   		propertyConfig.set(propertyGroup+".fire-spread", defaultConfig.get("RegionFlagDefaults.fire-spread"));
+   		propertyConfig.set(propertyGroup+".lava-fire", defaultConfig.get("RegionFlagDefaults.lava-fire"));
+   		propertyConfig.set(propertyGroup+".lightning", defaultConfig.get("RegionFlagDefaults.lightning"));
+   		propertyConfig.set(propertyGroup+".chest-access", defaultConfig.get("RegionFlagDefaults.chest-access"));
+   		propertyConfig.set(propertyGroup+".water-flow", defaultConfig.get("RegionFlagDefaults.water-flow"));
+   		propertyConfig.set(propertyGroup+".lava-flow", defaultConfig.get("RegionFlagDefaults.lava-flow"));
+   		propertyConfig.set(propertyGroup+".use", defaultConfig.get("RegionFlagDefaults.use"));
+   		propertyConfig.set(propertyGroup+".leaf-decay", defaultConfig.get("RegionFlagDefaults.leaf-decay"));
+   		propertyConfig.set(propertyGroup+".greeting", defaultConfig.get("RegionFlagDefaults.greeting"));
+   		propertyConfig.set(propertyGroup+".greeting-noowner", defaultConfig.get("RegionFlagDefaults.greeting-noowner"));
+   		propertyConfig.set(propertyGroup+".farewell", defaultConfig.get("RegionFlagDefaults.farewell"));
+   		propertyConfig.set(propertyGroup+".priority", defaultConfig.get("RegionFlagDefaults.priority"));
    		
     	// Save the configuration
-    	plugin.savePropertyConfig();
+    	propertyConfig.save();
     	
     	// Set the property group so set and save can use it.
     	plugin.setPropertyName(propertyGroup);

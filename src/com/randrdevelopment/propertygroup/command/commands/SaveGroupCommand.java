@@ -5,10 +5,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.randrdevelopment.propertygroup.PropertyGroup;
+import com.randrdevelopment.propertygroup.PropertyGroupConfig;
 import com.randrdevelopment.propertygroup.command.BaseCommand;
 
 public class SaveGroupCommand extends BaseCommand{
-	FileConfiguration propertyConfig;
+	private PropertyGroupConfig propertyConfig = null;
 	
 	public SaveGroupCommand(PropertyGroup plugin) {
         super(plugin);
@@ -69,6 +70,6 @@ public class SaveGroupCommand extends BaseCommand{
 		
 		// Save Configuration File
 		sender.sendMessage(plugin.getTag() + "'" + propertyGroup + "' Saved.");
-		plugin.savePropertyConfig();
+		propertyConfig.save();
     }
 }

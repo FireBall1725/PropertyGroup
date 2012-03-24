@@ -5,10 +5,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.randrdevelopment.propertygroup.PropertyGroup;
+import com.randrdevelopment.propertygroup.PropertyGroupConfig;
 import com.randrdevelopment.propertygroup.command.BaseCommand;
 
 public class SetSizeCommand extends BaseCommand{
-	FileConfiguration propertyConfig;
+	private PropertyGroupConfig propertyConfig = null;
 	
 	public SetSizeCommand(PropertyGroup plugin) {
         super(plugin);
@@ -75,6 +76,6 @@ public class SetSizeCommand extends BaseCommand{
 		propertyConfig.set(propertyGroup+".cols", cols);
 		sender.sendMessage(plugin.getTag() + "Size set, Rows = " + rows + " and Cols = " + cols);
 		sender.sendMessage(ChatColor.AQUA + "use '/property showregion' to show the group size");
-		plugin.savePropertyConfig();
+		propertyConfig.save();
     }
 }
