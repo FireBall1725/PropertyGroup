@@ -40,6 +40,7 @@ public class PropertyGroup extends JavaPlugin {
 	private CommandManager commandManager;
 	private FileConfiguration propertyConfig = null;
 	private File propertyConfigFile = null;
+	private File defaultConfigFile = null;
 	private String propertyGroup = null;
 	private Set<int[]> blocks = null;
 	
@@ -47,14 +48,7 @@ public class PropertyGroup extends JavaPlugin {
 		instance = this;
 		Log.info("[PropertyGroup] Starting Property Groups Version 1.0");
 		
-		// Setup default configuration
-		getConfig().options().copyDefaults(true);
-		saveConfig();
-		
-		// Setup property groups configuration
-		getPropertyConfig();
-		savePropertyConfig();
-		
+		loadConfiguration();
 		registerCommands();
 		loadEssentials();
 		loadWorldEdit();
@@ -70,6 +64,21 @@ public class PropertyGroup extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         return commandManager.dispatch(sender, command, label, args, this);
+    }
+    
+    private void loadConfiguration(){
+    	// Setup YML Files
+    	defaultConfigFile = new File(getDataFolder(), "config.yml");
+    	propertyConfigFile = new File(getDataFolder(), "propertygroups.yml");
+    	
+    	// Setup default configuration
+    	PropertyGroupConfig defaultConfig = new PropertyGroupConfig(defaultConfigFile);
+    	defaultConfig.setTemplateName("/config.yml", PropertyGroup.class);
+    	defaultConfig.load();
+		
+		// Setup property groups configuration
+    	PropertyGroupConfig propertyConfig = new PropertyGroupConfig(propertyConfigFile);
+    	propertyConfig.load();
     }
     
 	private void loadEssentials(){

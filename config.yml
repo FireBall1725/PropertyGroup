@@ -1,15 +1,25 @@
-##################################################################################################
-# This is the default configuration for the Property Groups.  When a property group              #
-# is created it will use these defaults.  The flags can be set using the                         #
-# /property set <option> <value> inside the game if you wish to change something                 #
-# after the group has been created.                                                              #
-##################################################################################################
+# YML CONFIGURATION NOTES
+# If you want to use special characters in this document, such as accented letters, you MUST save the file as UTF-8, not ANSI.
+# If you receive an error when PropertyGroup loads, ensure that:
+#   - No tabs are present: YAML only allows spaces
+#   - Indents are correct: YAML heirarchy is based entirely on indentation
+#   - You have "escaped" all apostrophes in your text: If you want to write "don't", for example, write "don''t" instead (note the doubled apostrphe)
+#   - List items are prefixed with a hyphen and indented:
+#       lists:
+#         - look like this
+#       not:
+#       - like this
+#   - Text with symbols is enclosed in single or double quotation marks
+#   - You have saved the document as UTF-8, NOT the default, ANSI
 
-##################################################################################################
-# DEFAULT WORLDGUARD FLAGS                                                                       #
-# This sets the default options for the worldguard flags                                         #
-# True = Allow and False = Deny                                                                  #
-##################################################################################################
+# This is the default configuration for the Property Groups.  When a property group
+# is created it will use these defaults.  The flags can be set using the
+# /property set <option> <value> inside the game if you wish to change something
+# after the group has been created.
+
+# DEFAULT WORLDGUARD FLAGS
+# This sets the default options for the worldguard flags
+# True = Allow and False = Deny
 RegionFlagDefaults:
     pvp: true                # Allow PVP on the property (default: true)
     mob-damage: true         # Allow user to recieve mob damage on the property (default: true)
@@ -35,17 +45,13 @@ RegionFlagDefaults:
     greeting-noowner: Welcome to %PropertyName%.
     farewell: You are now leaving %PropertyName%.
 
-##################################################################################################
-# DEFAULT OPTIONS FOR PROPERTY GROUPS                                                            #
-# This sets the default options that are set when creating a new property group                  #
-##################################################################################################
+# DEFAULT OPTIONS FOR PROPERTY GROUPS
+# This sets the default options that are set when creating a new property group
 PropertyGroupDefaults:
     userteleport: false      # Teleport the user to the property (default: false)
     propertyspacing: 10      # Amount of space (in blocks) between the properties (default: 10)
     createregion: false      # Create a worldguard region around the property (default: false)
     assignhome: false        # Set the /home of the user to the property (default: false)
 
-##################################################################################################
-# DO NOT EDIT BELOW THIS LINE - FOR INTERNAL USE ONLY                                            #
-##################################################################################################
-config-version: 1.0.0
+# INTERNAL FUNCTIONS - DO NOT EDIT BELOW THIS LINE
+config-version: 1.1
