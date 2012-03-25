@@ -13,6 +13,7 @@ import com.randrdevelopment.propertygroup.PropertyGroup;
 import com.randrdevelopment.propertygroup.PropertyGroupConfig;
 import com.randrdevelopment.propertygroup.regions.RegionTools;
 import com.randrdevelopment.propertygroup.regions.SchematicTools;
+import com.randrdevelopment.propertygroup.regions.TeleportUserTools;
 
 public class CreatePropertyCommand extends BaseCommand{
 	private PropertyGroupConfig propertyConfig = null;
@@ -102,6 +103,9 @@ public class CreatePropertyCommand extends BaseCommand{
 				        } else {
 				        	World world = Bukkit.getWorld(worldname);
 				        	Location tpLocation = new Location(world, x, y, z);
+				        	tpLocation = TeleportUserTools.getCenterProperty(tpLocation, width, length);
+				        	int newy = TeleportUserTools.getYLocation(tpLocation);
+				        	tpLocation.setY(newy);
 				        	targetPlayer.teleport(tpLocation);
 				        	sender.sendMessage(ChatColor.AQUA+playerName+" teleported to new property.");
 				        }
