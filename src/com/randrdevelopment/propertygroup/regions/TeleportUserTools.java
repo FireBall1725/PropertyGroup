@@ -21,15 +21,13 @@ public class TeleportUserTools {
 		int y = 255;
 		
 		World world = startPoint.getWorld();
-		
-		for(int i=0; i<=255; i++) {
-			int block = world.getBlockTypeIdAt((int) startPoint.getX(), y, (int) startPoint.getY());
+		for(int i=255; i>=0; i--) {
+			int block = world.getBlockTypeIdAt((int) startPoint.getX(), i, (int) startPoint.getZ());
 			
 			if (block != 0) {
+				y = i;
 				break;
 			}
-			
-			y--;
 		}
 		y++;
 		return y;
