@@ -8,6 +8,9 @@ commands:
    property:
       description: Main command for Property Groups.
       usage: /<command> help
+   cp:
+      description: Alias for Create Property.
+      usage: /<command> region user
 
 permissions:
     propertygroup.*:

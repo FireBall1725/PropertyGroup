@@ -5,7 +5,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import com.earth2me.essentials.Essentials;
@@ -28,6 +27,7 @@ public class CreatePropertyCommand extends BaseCommand{
         minArgs = 1;
         maxArgs = 2;
         identifiers.add("property createproperty");
+        identifiers.add("cp");
     }
 	
     @Override
