@@ -82,10 +82,12 @@ public class CreatePropertyCommand extends BaseCommand{
 				
 				// Get target player name
 				String playerName = null;
+				String playerDisplayName = null;
 				if (args.length == 2) {
 					playerName = args[1];
 					Player targetPlayer = Bukkit.getServer().getPlayer(playerName);
-					playerName = targetPlayer.getDisplayName();
+					playerName = targetPlayer.getName();
+					playerDisplayName = targetPlayer.getDisplayName();
 				}
 				
 				// Create Region if configured to do so...
@@ -110,7 +112,7 @@ public class CreatePropertyCommand extends BaseCommand{
 				        	int newy = TeleportUserTools.getYLocation(tpLocation);
 				        	tpLocation.setY(newy);
 				        	targetPlayer.teleport(tpLocation);
-				        	sender.sendMessage(ChatColor.AQUA+playerName+" teleported to new property.");
+				        	sender.sendMessage(ChatColor.AQUA+playerDisplayName+" teleported to new property.");
 				        }
 					}
 				}
