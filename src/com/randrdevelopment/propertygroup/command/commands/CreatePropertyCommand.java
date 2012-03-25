@@ -86,8 +86,10 @@ public class CreatePropertyCommand extends BaseCommand{
 				if (args.length == 2) {
 					playerName = args[1];
 					Player targetPlayer = Bukkit.getServer().getPlayer(playerName);
-					playerName = targetPlayer.getName();
-					playerDisplayName = targetPlayer.getDisplayName();
+					if (targetPlayer != null){
+						playerName = targetPlayer.getName();
+						playerDisplayName = targetPlayer.getDisplayName();
+					}
 				}
 				
 				// Create Region if configured to do so...
