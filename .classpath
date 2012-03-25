@@ -9,5 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="api/bukkit-1.2.3-R0.3-20120321.060153-16.jar"/>
+	<classpathentry kind="lib" path="api/Essentials.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

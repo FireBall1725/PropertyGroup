@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.earth2me.essentials.Essentials;
 import com.randrdevelopment.propertygroup.command.CommandManager;
 import com.randrdevelopment.propertygroup.command.commands.CreateGroupCommand;
 import com.randrdevelopment.propertygroup.command.commands.CreatePropertyCommand;
@@ -29,7 +30,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 public class PropertyGroup extends JavaPlugin {
 	Logger Log = Logger.getLogger("Minecraft");
 	private static WorldEditPlugin pluginWorldEdit;
-	//private static Essentials  
+	private static Essentials pluginEssentials;
 	private static WorldGuardPlugin pluginWorldGuard;
 	private static PropertyGroup instance;
 	private CommandManager commandManager;
@@ -85,17 +86,6 @@ public class PropertyGroup extends JavaPlugin {
     	return propertyConfig;
     }
     
-	private void loadEssentials(){
-		Plugin p = this.getServer().getPluginManager().getPlugin("Essentials");
-		if (p != null) {
-			Log.info("[PropertyGroup] Essentials Found");
-		}
-		else
-		{
-			Log.info("[PropertyGroup] Essentials not found, Essentials Support Disabled");
-		}
-	}
-	
 	private void registerCommands() {
         commandManager = new CommandManager();
         // Load Commands
@@ -137,12 +127,28 @@ public class PropertyGroup extends JavaPlugin {
 		}
 	}
 	
+	private void loadEssentials(){
+		Plugin p = this.getServer().getPluginManager().getPlugin("Essentials");
+		if (p != null) {
+			pluginEssentials = (Essentials) p;
+			Log.info("[PropertyGroup] Essentials Found");
+		}
+		else
+		{
+			Log.info("[PropertyGroup] Essentials not found, Essentials Support Disabled");
+		}
+	}
+	
 	public static WorldEditPlugin getWorldEdit() {
 		return pluginWorldEdit;
 	}
 	
 	public static WorldGuardPlugin getWorldGuard() {
 		return pluginWorldGuard;
+	}
+	
+	public static Essentials getEssentials() {
+		return pluginEssentials;
 	}
 
 	public String getTag() {

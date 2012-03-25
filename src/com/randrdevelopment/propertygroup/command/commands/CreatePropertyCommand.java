@@ -8,6 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.User;
 import com.randrdevelopment.propertygroup.command.BaseCommand;
 import com.randrdevelopment.propertygroup.PropertyGroup;
 import com.randrdevelopment.propertygroup.PropertyGroupConfig;
@@ -114,8 +116,24 @@ public class CreatePropertyCommand extends BaseCommand{
 				        	int newy = TeleportUserTools.getYLocation(tpLocation);
 				        	tpLocation.setY(newy);
 				        	targetPlayer.teleport(tpLocation);
+				        	targetPlayer.sendMessage(plugin.getTag()+"Welcome to your new property.");
 				        	sender.sendMessage(ChatColor.AQUA+playerDisplayName+" teleported to new property.");
 				        }
+					}
+				}
+				
+				// Set User /home if configured to do so...
+				if (propertyConfig.getBoolean(propertyGroup+".userteleport")) {
+					if (propertyConfig.getBoolean(propertyGroup+".assignhome")) {
+						Essentials pluginEssentials = PropertyGroup.getEssentials();
+						Player targetPlayer = Bukkit.getServer().getPlayer(playerName);
+						if (targetPlayer == null) {
+							sender.sendMessage(ChatColor.RED+playerName+" is not online! Unable to set home.");
+						} else {
+							User user = pluginEssentials.getUser(targetPlayer);
+							user.setHome();
+							sender.sendMessage(ChatColor.AQUA+playerDisplayName+" home was set.");
+						}
 					}
 				}
 				
