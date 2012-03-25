@@ -82,8 +82,11 @@ public class CreatePropertyCommand extends BaseCommand{
 				
 				// Get target player name
 				String playerName = null;
-				if (args.length == 2)
+				if (args.length == 2) {
 					playerName = args[1];
+					Player targetPlayer = Bukkit.getServer().getPlayer(playerName);
+					playerName = targetPlayer.getDisplayName();
+				}
 				
 				// Create Region if configured to do so...
 				if (propertyConfig.getBoolean(propertyGroup+".createregion")) {	
@@ -113,7 +116,10 @@ public class CreatePropertyCommand extends BaseCommand{
 				}
 				
 				propertyConfig.set(propertyGroup+".properties."+i+".created", true);
-				propertyConfig.set(propertyGroup+".properties."+i+".owner", playerName);
+				if (playerName != null) {
+					propertyConfig.set(propertyGroup+".properties."+i+".owner", playerName);
+				}
+				
 				propertyConfig.save();
 					
 				break;
