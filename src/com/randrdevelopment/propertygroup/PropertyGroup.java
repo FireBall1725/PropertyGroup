@@ -43,7 +43,7 @@ public class PropertyGroup extends JavaPlugin {
 	
 	public void onEnable(){ 
 		instance = this;
-		Log.info("[PropertyGroup] Starting Property Groups Version 1.0");
+		Log.info("[PropertyGroup] Starting Property Groups");
 		
 		loadConfiguration();
 		registerCommands();
@@ -91,12 +91,12 @@ public class PropertyGroup extends JavaPlugin {
         // Load Commands
         commandManager.addCommand(new CreateGroupCommand(this));
         commandManager.addCommand(new CreatePropertyCommand(this));
-        commandManager.addCommand(new HelpCommand(this));
+        //commandManager.addCommand(new HelpCommand(this));
         commandManager.addCommand(new HideRegionCommand(this));
         commandManager.addCommand(new ListGroupsCommand(this));
         commandManager.addCommand(new ReloadConfigCommand(this));
         commandManager.addCommand(new SaveGroupCommand(this));
-        commandManager.addCommand(new SetCommand(this));
+        //commandManager.addCommand(new SetCommand(this));
         commandManager.addCommand(new SetSizeCommand(this));
         commandManager.addCommand(new SetStartPointCommand(this));
         commandManager.addCommand(new ShowRegionCommand(this));
