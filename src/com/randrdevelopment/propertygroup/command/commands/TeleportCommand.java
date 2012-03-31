@@ -82,6 +82,13 @@ public class TeleportCommand extends BaseCommand{
 		String worldname = propertyConfig.getString(propertyGroup+".startlocation.world");
 		int width = propertyConfig.getInt(propertyGroup+".width");
 		int length = propertyConfig.getInt(propertyGroup+".length");
+		int spacing = propertyConfig.getInt(propertyGroup+".propertyspacing");
+		int row = propertyConfig.getInt(propertyGroup+".properties."+propertyNumber+".row");
+		int col = propertyConfig.getInt(propertyGroup+".properties."+propertyNumber+".col");
+		
+		x = ((width + spacing) * (row - 1)) + x;
+		z = ((length + spacing) * (col - 1)) + z;
+		
 		World world = Bukkit.getWorld(worldname);
 		Location tpLocation = new Location(world, x, y, z);
     	tpLocation = TeleportUserTools.getCenterProperty(tpLocation, width, length);
