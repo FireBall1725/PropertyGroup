@@ -122,8 +122,18 @@ public class SchematicTools {
 		return restored;
 	}
 	
-	public static boolean regen(Location l1, Location l2) {
-		
-		return false;
+	public static boolean regen(Location l1, Location l2, int blocks) {
+		World world = l1.getWorld();
+		String worldName = world.getName();
+		boolean restored = false;
+		try {
+			SchematicTools st = new SchematicTools();
+			if (st.reloadArea(blocks, worldName, (int)l1.getX(), (int)l1.getY(), (int)l1.getZ(), (int)l2.getX(), (int)l2.getY(), (int)l2.getZ())) {
+				restored = true;
+			}
+		} catch (Exception e) {
+			restored = false;
+		}
+		return restored;
 	}
 }

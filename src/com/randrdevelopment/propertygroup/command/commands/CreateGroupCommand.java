@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jnbt.CompoundTag;
 import org.jnbt.NBTInputStream;

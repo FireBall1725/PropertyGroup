@@ -14,12 +14,11 @@ import com.earth2me.essentials.Essentials;
 import com.randrdevelopment.propertygroup.command.CommandManager;
 import com.randrdevelopment.propertygroup.command.commands.CreateGroupCommand;
 import com.randrdevelopment.propertygroup.command.commands.CreatePropertyCommand;
-import com.randrdevelopment.propertygroup.command.commands.HelpCommand;
+import com.randrdevelopment.propertygroup.command.commands.DeletePropertyCommand;
 import com.randrdevelopment.propertygroup.command.commands.HideRegionCommand;
 import com.randrdevelopment.propertygroup.command.commands.ListGroupsCommand;
 import com.randrdevelopment.propertygroup.command.commands.ReloadConfigCommand;
 import com.randrdevelopment.propertygroup.command.commands.SaveGroupCommand;
-import com.randrdevelopment.propertygroup.command.commands.SetCommand;
 import com.randrdevelopment.propertygroup.command.commands.SetSizeCommand;
 import com.randrdevelopment.propertygroup.command.commands.SetStartPointCommand;
 import com.randrdevelopment.propertygroup.command.commands.ShowRegionCommand;
@@ -92,6 +91,7 @@ public class PropertyGroup extends JavaPlugin {
         // Load Commands
         commandManager.addCommand(new CreateGroupCommand(this));
         commandManager.addCommand(new CreatePropertyCommand(this));
+        commandManager.addCommand(new DeletePropertyCommand(this));
         //commandManager.addCommand(new HelpCommand(this));
         commandManager.addCommand(new HideRegionCommand(this));
         commandManager.addCommand(new ListGroupsCommand(this));
