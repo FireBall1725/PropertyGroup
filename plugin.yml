@@ -22,6 +22,7 @@ permissions:
             propertygroup.create: true
             propertygroup.reload: true    
             propertygroup.createproperty: true 
+            propertygroup.deleteproperty: true
             propertygroup.teleport: true       
 
     propertygroup.create:
@@ -34,6 +35,10 @@ permissions:
         
     propertygroup.createproperty:
         description: Allows the user to create a property
+        default: op
+        
+    propertygroup.deleteproperty:
+        description: Allows the user to delete a property
         default: op
         
     propertygroup.teleport:
