@@ -11,6 +11,9 @@ commands:
    cp:
       description: Alias for Create Property.
       usage: /<command> region user
+   ptp:
+      description: Alias for Teleport to Property.
+      usage: /<command> property [user]
 
 permissions:
     propertygroup.*:

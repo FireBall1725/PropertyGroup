@@ -73,7 +73,7 @@ public class CreateGroupCommand extends BaseCommand{
     	// Validate that schematic file exists
     	String filename = null;
     	try {
-    		File f = new File("schematics/"+propertyGroup+".schematic");
+    		File f = new File("plugins/WorldEdit/schematics/"+propertyGroup+".schematic");
     		FileInputStream fis = new FileInputStream(f);
     		fis.close();
     		filename = "schematics/"+propertyGroup+".schematic";

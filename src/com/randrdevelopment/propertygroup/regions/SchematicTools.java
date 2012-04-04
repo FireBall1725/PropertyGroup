@@ -12,10 +12,14 @@ import com.randrdevelopment.propertygroup.PropertyGroup;
 import com.sk89q.worldedit.CuboidClipboard;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.LocalPlayer;
+import com.sk89q.worldedit.LocalWorld;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.regions.CuboidRegion;
+import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
+import com.sk89q.worldedit.regions.Region;
 
 public class SchematicTools {
 	private WorldEditPlugin wep;
@@ -33,8 +37,8 @@ public class SchematicTools {
 	
 	private boolean loadSchematicFile(String FileName){
 		try {
-			File schematicsDir = new File("schematics");
-			saveFile = we.getSafeSaveFile(localPlayer, schematicsDir, FileName, "schematic", new String[] { "schematic" });
+			File dir = we.getWorkingDirectoryFile("schematics");
+	        saveFile = we.getSafeOpenFile(localPlayer, dir, FileName, "schematic", "schematic");
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -50,12 +54,37 @@ public class SchematicTools {
 			World world = Bukkit.getWorld(worldName);
 			
 			EditSession es = new EditSession(new BukkitWorld(world), blocks);
-			CuboidClipboard cc = CuboidClipboard.loadSchematic(saveFile);
+			CuboidClipboard cc = MCEditSchematicFormat.MCEDIT.load(saveFile);
 			Vector originaloffset = cc.getOffset();
 			Vector newoffset = new Vector(0, originaloffset.getY(), 0);
 			cc.setOffset(newoffset);
 			Vector pos = new Vector(start_x, start_y, start_z);
 			cc.paste(es, pos, false);
+			return true;
+		} catch (Exception e) {
+			PropertyGroupLogger.severe(e.getMessage());
+			return false;
+		}
+	}
+	
+	private boolean reloadArea(int blocks, String worldName, int x1, int y1, int z1, int x2, int y2, int z2) {
+		if (wep == null) {
+			return false;
+		}
+		
+		try {
+			World world = Bukkit.getWorld(worldName);
+			EditSession es = new EditSession(new BukkitWorld(world), blocks);
+		
+			LocalWorld lworld = new BukkitWorld(world);
+			
+			Vector min = new Vector(x1, y1, z1);
+			Vector max = new Vector(x2, y2, z2);
+			
+			Region region = new CuboidRegion(lworld, min, max);
+			
+			lworld.regenerate(region, es);
+			
 			return true;
 		} catch (Exception e) {
 			PropertyGroupLogger.severe(e.getMessage());
@@ -91,5 +120,10 @@ public class SchematicTools {
 			restored = false;
 		}
 		return restored;
+	}
+	
+	public static boolean regen(Location l1, Location l2) {
+		
+		return false;
 	}
 }

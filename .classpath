@@ -2,13 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/tylerreed/Dropbox/Java/api/worldedit-5.3.jar"/>
-	<classpathentry kind="lib" path="/Users/tylerreed/Dropbox/Java/api/WorldGuard.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://www.sk89q.com/docs/worldguard/api/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="api/bukkit-1.2.3-R0.3-20120321.060153-16.jar"/>
+	<classpathentry kind="lib" path="api/craftbukkit-1.2.5-R0.2-20120403.183852-2.jar"/>
 	<classpathentry kind="lib" path="api/Essentials.jar"/>
+	<classpathentry kind="lib" path="api/WorldEdit.jar"/>
+	<classpathentry kind="lib" path="api/worldguard.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

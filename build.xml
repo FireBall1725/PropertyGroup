@@ -35,7 +35,7 @@
         <loadfile srcfile="VERSION" property="VERSION"/>
 		
         <!-- Replace ${VERSION} with the version number in plugin.yml -->
-        <replace file="plugin.yml" value="${VERSION} (b${BUILD_NUMBER}-git-${GIT_COMMIT_FULL})">
+        <replace file="plugin.yml" value="${VERSION} (b${BUILD_NUMBER})">
             <replacefilter token="@VERSION@"/>
         </replace>
 		
@@ -60,7 +60,7 @@
 			<manifest>
 				<attribute name="Implementation-Title" value="PropertyGroup"/>
 			    <attribute name="Implementation-Vendor" value="FireBall1725"/>
-				<attribute name="Implementation-Version" value="b${BUILD_NUMBER}-git-${GIT_COMMIT_FULL}"/>
+				<attribute name="Implementation-Version" value="b${BUILD_NUMBER}"/>
 			</manifest>
 		</jar>
 	</target>
