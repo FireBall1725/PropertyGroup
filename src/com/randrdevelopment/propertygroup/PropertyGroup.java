@@ -23,6 +23,7 @@ import com.randrdevelopment.propertygroup.command.commands.SetCommand;
 import com.randrdevelopment.propertygroup.command.commands.SetSizeCommand;
 import com.randrdevelopment.propertygroup.command.commands.SetStartPointCommand;
 import com.randrdevelopment.propertygroup.command.commands.ShowRegionCommand;
+import com.randrdevelopment.propertygroup.command.commands.TeleportCommand;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -100,6 +101,7 @@ public class PropertyGroup extends JavaPlugin {
         commandManager.addCommand(new SetSizeCommand(this));
         commandManager.addCommand(new SetStartPointCommand(this));
         commandManager.addCommand(new ShowRegionCommand(this));
+        commandManager.addCommand(new TeleportCommand(this));
     }
 	
 	public static PropertyGroup getInstance() {
