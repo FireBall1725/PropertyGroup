@@ -176,12 +176,40 @@ public class RegionTools {
 		}
 	}
 	
+	private boolean deleteRegion(String regionName, World world){
+		RegionManager m = wgp.getRegionManager(world);
+		if (m == null)
+			return false;
+		
+		RegionManager regionManager = wgp.getRegionManager(world);
+		regionManager.removeRegion(regionName);
+		
+		try {
+			regionManager.save();
+			return true;
+		} catch (ProtectionDatabaseException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public static boolean createProtectedRegion(String regionName, String worldName, int x1, int x2, int y1, int y2, int z1, int z2, String playerName, FileConfiguration propertyConfig, String PropertyGroupName){
 		RegionTools rt = new RegionTools();
 		
 		World world = Bukkit.getWorld(worldName);
 		
 		if (rt.createRegion(regionName, world, x1, x2, y1, y2, z1, z2, playerName, propertyConfig, PropertyGroupName))
+			return true;
+		
+		return false;
+	}
+	
+	public static boolean deleteProtectedRegion(String regionName, String worldName) {
+		RegionTools rt = new RegionTools();
+		
+		World world = Bukkit.getWorld(worldName);
+		
+		if (rt.deleteRegion(regionName, world))
 			return true;
 		
 		return false;

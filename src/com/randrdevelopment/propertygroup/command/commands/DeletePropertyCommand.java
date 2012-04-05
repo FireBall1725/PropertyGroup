@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import com.randrdevelopment.propertygroup.PropertyGroup;
 import com.randrdevelopment.propertygroup.PropertyGroupConfig;
 import com.randrdevelopment.propertygroup.command.BaseCommand;
+import com.randrdevelopment.propertygroup.regions.RegionTools;
 import com.randrdevelopment.propertygroup.regions.SchematicTools;
 
 public class DeletePropertyCommand extends BaseCommand{
@@ -36,6 +37,7 @@ public class DeletePropertyCommand extends BaseCommand{
     	}
     	
     	// Get property group name and property number
+    	String regionName = args[0];
 		String[] pgargs = args[0].split("-");
 		if (pgargs.length != 2) {
 			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Property Group Name is not Valid.");
@@ -77,7 +79,12 @@ public class DeletePropertyCommand extends BaseCommand{
     	// Reload Region
     	if (SchematicTools.regen(l1, l2, blocks)) {
     		// Delete info from configuration
-    		
+    		try 
+    		{
+    			RegionTools.deleteProtectedRegion(regionName, worldname);
+    		} catch (Exception e) {
+    			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Region could not be deleted...");
+    		}
     		sender.sendMessage(plugin.getTag() + "Property Deleted");
     	} else {
     		sender.sendMessage(plugin.getTag() + ChatColor.RED + "Property not Deleted, internal error...");
