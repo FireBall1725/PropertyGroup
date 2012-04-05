@@ -85,7 +85,14 @@ public class DeletePropertyCommand extends BaseCommand{
     		} catch (Exception e) {
     			sender.sendMessage(plugin.getTag() + ChatColor.RED + "Region could not be deleted...");
     		}
-    		sender.sendMessage(plugin.getTag() + "Property Deleted");
+    		
+    		propertyConfig.removeProperty(propertyGroup+".properties."+propertyNumber);
+    		propertyConfig.set(propertyGroup+".properties."+propertyNumber+".created", false);
+			propertyConfig.set(propertyGroup+".properties."+propertyNumber+".row", row);
+			propertyConfig.set(propertyGroup+".properties."+propertyNumber+".col", col);
+    		propertyConfig.save();
+			
+    		sender.sendMessage(plugin.getTag() + "Property '"+propertyGroup+"-"+propertyNumber+"' Deleted");
     	} else {
     		sender.sendMessage(plugin.getTag() + ChatColor.RED + "Property not Deleted, internal error...");
     	}
