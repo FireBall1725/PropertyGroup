@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.earth2me.essentials.Essentials;
 import com.randrdevelopment.propertygroup.command.CommandManager;
+import com.randrdevelopment.propertygroup.command.commands.AddToPropertyCommand;
 import com.randrdevelopment.propertygroup.command.commands.CreateGroupCommand;
 import com.randrdevelopment.propertygroup.command.commands.CreatePropertyCommand;
 import com.randrdevelopment.propertygroup.command.commands.DeletePropertyCommand;
@@ -89,6 +90,7 @@ public class PropertyGroup extends JavaPlugin {
 	private void registerCommands() {
         commandManager = new CommandManager();
         // Load Commands
+        commandManager.addCommand(new AddToPropertyCommand(this));
         commandManager.addCommand(new CreateGroupCommand(this));
         commandManager.addCommand(new CreatePropertyCommand(this));
         commandManager.addCommand(new DeletePropertyCommand(this));
