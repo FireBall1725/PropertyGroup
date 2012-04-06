@@ -14,6 +14,9 @@ commands:
    ptp:
       description: Alias for Teleport to Property.
       usage: /<command> property [user]
+   add:
+      description: Alias for adding user to property.
+      usage: /<command> <player> [property]
 
 permissions:
     propertygroup.*:
@@ -23,7 +26,8 @@ permissions:
             propertygroup.reload: true    
             propertygroup.createproperty: true 
             propertygroup.deleteproperty: true
-            propertygroup.teleport: true       
+            propertygroup.teleport: true
+            propertygroup.addoverride: true
 
     propertygroup.create:
         description: Allows you to create a property group
@@ -43,4 +47,8 @@ permissions:
         
     propertygroup.teleport:
         description: Allows the user to teleport to properties
+        default: op
+        
+    propertygroup.addoverride:
+        description: Allows the user to add a player to an island that isnt theirs
         default: op
