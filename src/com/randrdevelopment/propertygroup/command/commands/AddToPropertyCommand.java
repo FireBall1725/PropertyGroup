@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.randrdevelopment.propertygroup.PropertyGroup;
 import com.randrdevelopment.propertygroup.PropertyGroupConfig;
 import com.randrdevelopment.propertygroup.command.BaseCommand;
+import com.randrdevelopment.propertygroup.regions.RegionTools;
 
 public class AddToPropertyCommand extends BaseCommand{
 	private PropertyGroupConfig propertyConfig = null;
@@ -41,9 +42,10 @@ public class AddToPropertyCommand extends BaseCommand{
     			
     			for(int i=1; i<=properties; i++) {
     				String PropertyOwner = propertyConfig.getString(s + ".properties."+i+".owner");
+    				String worldName = propertyConfig.getString(s + ".startlocation.world");
     				if (PropertyOwner != null) {
     					if (PropertyOwner.equalsIgnoreCase(playerName)) {
-    						addMemberToProperty(s, Integer.toString(i), args[0], sender);
+    						addMemberToProperty(s, Integer.toString(i), args[0], sender, worldName);
     					}
     				}
     			}
@@ -85,13 +87,19 @@ public class AddToPropertyCommand extends BaseCommand{
     	    	}
     		}
     		
+    		// startlocation.world
+    	    String worldName = propertyConfig.getString(propertyGroup + ".startlocation.world");
+    		
     		// Add player to the property group
-    		addMemberToProperty(propertyGroup, propertyNumber, args[0], sender);
+    		addMemberToProperty(propertyGroup, propertyNumber, args[0], sender, worldName);
     	}
     }
    
-    private void addMemberToProperty(String propertyGroup, String propertyNumber, String RemotePlayerName, CommandSender sender) {
-    	// Debug info for now
-    	sender.sendMessage(plugin.getTag()+"Add ["+RemotePlayerName+"] to ["+propertyGroup+"-"+propertyNumber+"]");
+    private void addMemberToProperty(String propertyGroup, String propertyNumber, String RemotePlayerName, CommandSender sender, String worldName) {
+    	if (RegionTools.addMemberToProtectedRegion(propertyGroup+"-"+propertyNumber, worldName, RemotePlayerName)) {
+    		sender.sendMessage(plugin.getTag()+"Added "+RemotePlayerName+" to Property "+propertyGroup+"-"+propertyNumber);
+    	} else {
+    		sender.sendMessage(plugin.getTag()+"Error adding "+RemotePlayerName+" to Property "+propertyGroup+"-"+propertyNumber);
+    	}
     }
 }

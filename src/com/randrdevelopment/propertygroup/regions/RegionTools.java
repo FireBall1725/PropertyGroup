@@ -193,6 +193,30 @@ public class RegionTools {
 		}
 	}
 	
+	private boolean addMember(String regionName, World world, String playerName) {
+		RegionManager m = wgp.getRegionManager(world);
+		if (m == null)
+			return false;
+		
+		RegionManager regionManager = wgp.getRegionManager(world);
+		
+		ProtectedRegion region = regionManager.getRegion(regionName);
+		
+        DefaultDomain members = new DefaultDomain();
+        members.addPlayer(playerName);        
+		region.setMembers(members);
+		
+		regionManager.addRegion(region);
+		
+		try {
+			regionManager.save();
+			return true;
+		} catch (ProtectionDatabaseException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public static boolean createProtectedRegion(String regionName, String worldName, int x1, int x2, int y1, int y2, int z1, int z2, String playerName, FileConfiguration propertyConfig, String PropertyGroupName){
 		RegionTools rt = new RegionTools();
 		
@@ -210,6 +234,17 @@ public class RegionTools {
 		World world = Bukkit.getWorld(worldName);
 		
 		if (rt.deleteRegion(regionName, world))
+			return true;
+		
+		return false;
+	}
+	
+	public static boolean addMemberToProtectedRegion(String regionName, String worldName, String playerName) {
+		RegionTools rt = new RegionTools();
+		
+		World world = Bukkit.getWorld(worldName);
+		
+		if (rt.addMember(regionName, world, playerName))
 			return true;
 		
 		return false;
