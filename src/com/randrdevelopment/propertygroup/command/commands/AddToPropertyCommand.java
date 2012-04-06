@@ -41,8 +41,10 @@ public class AddToPropertyCommand extends BaseCommand{
     			
     			for(int i=1; i<=properties; i++) {
     				String PropertyOwner = propertyConfig.getString(s + ".properties."+i+".owner");
-    				if (PropertyOwner.equalsIgnoreCase(playerName)) {
-    					addMemberToProperty(s, Integer.toString(i), args[0], sender);
+    				if (PropertyOwner != null) {
+    					if (PropertyOwner.equalsIgnoreCase(playerName)) {
+    						addMemberToProperty(s, Integer.toString(i), args[0], sender);
+    					}
     				}
     			}
             }
