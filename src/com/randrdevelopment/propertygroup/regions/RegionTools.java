@@ -201,8 +201,8 @@ public class RegionTools {
 		RegionManager regionManager = wgp.getRegionManager(world);
 		
 		ProtectedRegion region = regionManager.getRegion(regionName);
-		
-        DefaultDomain members = new DefaultDomain();
+
+        DefaultDomain members = region.getMembers();
         members.addPlayer(playerName);        
 		region.setMembers(members);
 		
