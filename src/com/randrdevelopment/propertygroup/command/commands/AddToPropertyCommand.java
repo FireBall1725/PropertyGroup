@@ -98,6 +98,8 @@ public class AddToPropertyCommand extends BaseCommand{
     private void addMemberToProperty(String propertyGroup, String propertyNumber, String RemotePlayerName, CommandSender sender, String worldName) {
     	if (RegionTools.addMemberToProtectedRegion(propertyGroup+"-"+propertyNumber, worldName, RemotePlayerName)) {
     		sender.sendMessage(plugin.getTag()+"Added "+RemotePlayerName+" to Property "+propertyGroup+"-"+propertyNumber);
+    		propertyConfig.set(propertyGroup+".properties."+propertyNumber+".members."+RemotePlayerName, true);
+    		propertyConfig.save();
     	} else {
     		sender.sendMessage(plugin.getTag()+"Error adding "+RemotePlayerName+" to Property "+propertyGroup+"-"+propertyNumber);
     	}
