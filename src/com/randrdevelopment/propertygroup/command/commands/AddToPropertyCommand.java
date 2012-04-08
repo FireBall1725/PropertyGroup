@@ -28,10 +28,11 @@ public class AddToPropertyCommand extends BaseCommand{
     	propertyConfig = plugin.getPropertyConfig();
     	Player player = (Player)sender;
 		String playerName = player.getName();
-		
+
     	if (args.length == 1)
     	{
     		// Set to all properties player owns
+    		boolean setProperties = false;
     		
     		// Loop though all the property groups, and match the owner
     		for (String s : propertyConfig.getKeys(false)) {
@@ -46,10 +47,15 @@ public class AddToPropertyCommand extends BaseCommand{
     				if (PropertyOwner != null) {
     					if (PropertyOwner.equalsIgnoreCase(playerName)) {
     						addMemberToProperty(s, Integer.toString(i), args[0], sender, worldName);
+    						setProperties = true;
     					}
     				}
     			}
             }
+    		
+    		if (!setProperties) {
+    			sender.sendMessage(plugin.getTag()+ChatColor.RED+"You do not own any properties...");
+    		}
     	}
     	else
     	{
@@ -96,12 +102,23 @@ public class AddToPropertyCommand extends BaseCommand{
     }
    
     private void addMemberToProperty(String propertyGroup, String propertyNumber, String RemotePlayerName, CommandSender sender, String worldName) {
-    	if (RegionTools.addMemberToProtectedRegion(propertyGroup+"-"+propertyNumber, worldName, RemotePlayerName)) {
-    		sender.sendMessage(plugin.getTag()+"Added "+RemotePlayerName+" to Property "+propertyGroup+"-"+propertyNumber);
-    		propertyConfig.set(propertyGroup+".properties."+propertyNumber+".members."+RemotePlayerName, true);
-    		propertyConfig.save();
-    	} else {
-    		sender.sendMessage(plugin.getTag()+"Error adding "+RemotePlayerName+" to Property "+propertyGroup+"-"+propertyNumber);
+    	// Check to see if regions are enabled.
+    	if (!propertyConfig.getBoolean(propertyGroup+".createregion"))
+    	{
+    		sender.sendMessage(plugin.getTag()+ChatColor.RED+"Regions not enabled for '" + propertyGroup + "'");
+    		return;
+    	}
+    	
+    	try {
+    		if (RegionTools.addMemberToProtectedRegion(propertyGroup+"-"+propertyNumber, worldName, RemotePlayerName)) {
+    			sender.sendMessage(plugin.getTag()+"Added "+RemotePlayerName+" to Property "+propertyGroup+"-"+propertyNumber);
+    			propertyConfig.set(propertyGroup+".properties."+propertyNumber+".members."+RemotePlayerName, true);
+    			propertyConfig.save();
+    		} else {
+    			sender.sendMessage(plugin.getTag()+"Error adding "+RemotePlayerName+" to Property "+propertyGroup+"-"+propertyNumber);
+    		}
+    	} catch (Exception e) {
+    		sender.sendMessage(plugin.getTag()+ChatColor.RED+"Internal Error...");
     	}
     }
 }
