@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jnbt.CompoundTag;
@@ -15,6 +16,7 @@ import org.jnbt.Tag;
 import com.randrdevelopment.propertygroup.PropertyGroup;
 import com.randrdevelopment.propertygroup.PropertyGroupConfig;
 import com.randrdevelopment.propertygroup.command.BaseCommand;
+import com.randrdevelopment.propertygroup.regions.SchematicTools;
 
 public class CreateGroupCommand extends BaseCommand{
 	private PropertyGroupConfig defaultConfig = null;
@@ -85,27 +87,17 @@ public class CreateGroupCommand extends BaseCommand{
     	propertyConfig.createSection(propertyGroup);
     	
     	// Store the size of the schematic into the configuration
-    	try {
-    		File f = new File(filename);
-    		FileInputStream fis = new FileInputStream(f);
-    		NBTInputStream nbt = new NBTInputStream(fis);
-    		CompoundTag backuptag = (CompoundTag) nbt.readTag();
-    		Map<String, Tag> tagCollection = backuptag.getValue();
-
-    		short width = (Short)getChildTag(tagCollection, "Width", ShortTag.class).getValue();
-    		short length = (Short)getChildTag(tagCollection, "Length", ShortTag.class).getValue();
-    		short height = (Short)getChildTag(tagCollection, "Height", ShortTag.class).getValue();
-
-    		nbt.close();
-    		fis.close();
-				            
-    		propertyConfig.set(propertyGroup+".width", width);
-    		propertyConfig.set(propertyGroup+".length", length);
-    		propertyConfig.set(propertyGroup+".height", height);
-    	} catch (Exception e) {
+    	Location size = SchematicTools.getSize(filename);
+    	if (size.getX() == 0 || size.getY() == 0 || size.getZ() == 0) {
     		sender.sendMessage(plugin.getTag()+ChatColor.RED+"There was an error reading the schematic file.");
-    		return;
     	}
+    	
+    	int width = (int)size.getX();
+    	int height = (int)size.getY();
+    	int length = (int)size.getZ();
+    	propertyConfig.set(propertyGroup+".width", width);
+		propertyConfig.set(propertyGroup+".length", length);
+		propertyConfig.set(propertyGroup+".height", height);
     	
     	// Get default configuration from config.yml
     	propertyConfig.set(propertyGroup+".userteleport", defaultConfig.get("PropertyGroupDefaults.userteleport"));

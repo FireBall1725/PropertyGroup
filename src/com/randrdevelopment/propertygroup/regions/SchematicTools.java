@@ -45,6 +45,45 @@ public class SchematicTools {
 		}
 	}
 	
+	private int getWidth() {
+		if (wep == null){
+			return 0;
+		}
+		
+		try {
+			CuboidClipboard cc = MCEditSchematicFormat.MCEDIT.load(saveFile);
+			return cc.getWidth();
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	
+	private int getLength() {
+		if (wep == null){
+			return 0;
+		}
+		
+		try {		
+			CuboidClipboard cc = MCEditSchematicFormat.MCEDIT.load(saveFile);
+			return cc.getLength();
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	
+	private int getHeight() {
+		if (wep == null){
+			return 0;
+		}
+		
+		try {
+			CuboidClipboard cc = MCEditSchematicFormat.MCEDIT.load(saveFile);
+			return cc.getHeight();
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	
 	private boolean placeSchematic(int blocks, int start_x, int start_y, int start_z, String worldName){
 		if (wep == null){
 			return false;
@@ -135,5 +174,25 @@ public class SchematicTools {
 			restored = false;
 		}
 		return restored;
+	}
+	
+	public static Location getSize(String FileName) {
+		try {
+			SchematicTools st = new SchematicTools();
+			if (st.loadSchematicFile(FileName)) {
+				int width = st.getWidth();
+				int height = st.getHeight();
+				int length = st.getLength();
+				
+				Location size = new Location(null, width, height, length);
+				return size;
+			} else {
+				Location size = new Location(null, 0, 0, 0);
+				return size;
+			}
+		} catch (Exception e) {
+			Location size = new Location(null, 0, 0, 0);
+			return size;
+		}
 	}
 }
