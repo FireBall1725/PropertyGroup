@@ -177,22 +177,22 @@ public class SchematicTools {
 	}
 	
 	public static Location getSize(String FileName) {
+		SchematicTools st = new SchematicTools();
+		Location size;
 		try {
-			SchematicTools st = new SchematicTools();
 			if (st.loadSchematicFile(FileName)) {
 				int width = st.getWidth();
 				int height = st.getHeight();
 				int length = st.getLength();
 				
-				Location size = new Location(null, width, height, length);
-				return size;
+				size = new Location(null, width, height, length);
 			} else {
-				Location size = new Location(null, 0, 0, 0);
-				return size;
+				size = new Location(null, 0, 0, 0);
 			}
 		} catch (Exception e) {
-			Location size = new Location(null, 0, 0, 0);
-			return size;
+			size = new Location(null, 0, 0, 0);
 		}
+		
+		return size;
 	}
 }
