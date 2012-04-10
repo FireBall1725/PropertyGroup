@@ -1,6 +1,7 @@
 package com.randrdevelopment.propertygroup.regions;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -18,6 +19,7 @@ import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.data.DataException;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.schematic.MCEditSchematicFormat;
 import com.sk89q.worldedit.regions.Region;
@@ -46,44 +48,9 @@ public class SchematicTools {
 		}
 	}
 	
-	private int getWidth() {
-		if (wep == null){
-			return 0;
-		}
-		
-		try {
-			CuboidClipboard cc = MCEditSchematicFormat.MCEDIT.load(saveFile);
-			Debug.print(Integer.toString(cc.getWidth()));
-			return cc.getWidth();
-		} catch (Exception e) {
-			return 0;
-		}
-	}
-	
-	private int getLength() {
-		if (wep == null){
-			return 0;
-		}
-		
-		try {		
-			CuboidClipboard cc = MCEditSchematicFormat.MCEDIT.load(saveFile);
-			return cc.getLength();
-		} catch (Exception e) {
-			return 0;
-		}
-	}
-	
-	private int getHeight() {
-		if (wep == null){
-			return 0;
-		}
-		
-		try {
-			CuboidClipboard cc = MCEditSchematicFormat.MCEDIT.load(saveFile);
-			return cc.getHeight();
-		} catch (Exception e) {
-			return 0;
-		}
+	private CuboidClipboard getSize() throws IOException, DataException {
+		CuboidClipboard cc = MCEditSchematicFormat.MCEDIT.load(saveFile);
+		return cc;
 	}
 	
 	private boolean placeSchematic(int blocks, int start_x, int start_y, int start_z, String worldName){
@@ -181,16 +148,16 @@ public class SchematicTools {
 	public static Location getSize(String FileName) {
 		SchematicTools st = new SchematicTools();
 		Location size;
+
 		try {
-			if (st.loadSchematicFile(FileName)) {
-				int width = st.getWidth();
-				int height = st.getHeight();
-				int length = st.getLength();
-				
-				size = new Location(null, width, height, length);
-			} else {
-				size = new Location(null, 0, 0, 0);
-			}
+			st.loadSchematicFile(FileName);
+			CuboidClipboard cc = st.getSize();
+			
+			int width = cc.getWidth();
+			int height = cc.getHeight();
+			int length = cc.getLength();
+			
+			size = new Location(null, width, height, length);
 		} catch (Exception e) {
 			size = new Location(null, 0, 0, 0);
 		}
