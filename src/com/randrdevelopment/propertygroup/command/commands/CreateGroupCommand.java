@@ -87,7 +87,7 @@ public class CreateGroupCommand extends BaseCommand{
     	propertyConfig.createSection(propertyGroup);
     	
     	// Store the size of the schematic into the configuration
-    	Location size = SchematicTools.getSize(filename);
+    	Location size = SchematicTools.getSize(propertyGroup);
     	if (size.getX() == 0 || size.getY() == 0 || size.getZ() == 0) {
     		sender.sendMessage(plugin.getTag()+ChatColor.RED+"There was an error reading the schematic file.");
     	}
