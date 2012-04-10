@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import com.apple.crypto.provider.Debug;
 import com.randrdevelopment.propertygroup.log.PropertyGroupLogger;
 import com.randrdevelopment.propertygroup.PropertyGroup;
 
@@ -52,6 +53,7 @@ public class SchematicTools {
 		
 		try {
 			CuboidClipboard cc = MCEditSchematicFormat.MCEDIT.load(saveFile);
+			Debug.print(Integer.toString(cc.getWidth()));
 			return cc.getWidth();
 		} catch (Exception e) {
 			return 0;
