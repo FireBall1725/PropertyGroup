@@ -52,6 +52,7 @@ PropertyGroupDefaults:
     propertyspacing: 10      # Amount of space (in blocks) between the properties (default: 10)
     createregion: false      # Create a worldguard region around the property (default: false)
     assignhome: false        # Set the /home of the user to the property (default: false)
+    maxuserproperties: 1     # Number of properties each user can have, can be overridden
 
 # INTERNAL FUNCTIONS - DO NOT EDIT BELOW THIS LINE
 config-version: 1.1
